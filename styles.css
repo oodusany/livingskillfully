@@ -1932,6 +1932,19 @@ section {
         gap: 3rem;
     }
 
+    .booking-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .booking-text {
+        order: 2;
+    }
+
+    .booking-form-section {
+        order: 1;
+    }
+
     .testimonials-container {
         grid-template-columns: 1fr;
         gap: 2rem;
