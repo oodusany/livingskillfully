@@ -423,12 +423,20 @@ const blog = {
                 if (!e.target.closest('.blog-link')) {
                     const link = card.querySelector('.blog-link');
                     if (link) {
-                        // For now, just show a message since we don't have actual blog posts
-                        forms.showSuccessMessage('Blog post functionality coming soon!');
+                        // Navigate to the article page
+                        window.location.href = link.getAttribute('href');
                     }
                 }
             });
         });
+        
+        // Handle placeholder card
+        const placeholderCard = document.querySelector('.blog-placeholder-card');
+        if (placeholderCard) {
+            placeholderCard.addEventListener('click', () => {
+                forms.showSuccessMessage('More articles coming soon! Stay tuned.');
+            });
+        }
     }
 };
 
