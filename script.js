@@ -627,7 +627,143 @@ document.addEventListener('DOMContentLoaded', () => {
     workflowExpand.init();
     bookingFormToggle.init();
     reflectionQuestions.init();
+    testimonialCarousel.init();
 });
+
+// Testimonial Card Deck
+const testimonialCarousel = {
+    track: document.querySelector('.carousel-track'),
+    cards: document.querySelectorAll('.testimonial-card'),
+    dots: document.querySelectorAll('.dot'),
+    prevBtn: document.querySelector('.prev-btn'),
+    nextBtn: document.querySelector('.next-btn'),
+    currentIndex: 0,
+    isTransitioning: false,
+    
+    init() {
+        if (!this.track) return;
+        
+        this.setupEventListeners();
+        this.setupTouchEvents();
+        this.setupAutoplay();
+        this.updateCardPositions();
+    },
+    
+    setupEventListeners() {
+        // Navigation buttons
+        this.prevBtn?.addEventListener('click', () => this.prevSlide());
+        this.nextBtn?.addEventListener('click', () => this.nextSlide());
+        
+        // Pagination dots
+        this.dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => this.goToSlide(index));
+        });
+        
+        // Card click navigation
+        this.cards.forEach((card, index) => {
+            card.addEventListener('click', () => {
+                if (index !== this.currentIndex) {
+                    this.goToSlide(index);
+                }
+            });
+        });
+    },
+    
+    setupTouchEvents() {
+        let startX = 0;
+        let endX = 0;
+        let startY = 0;
+        let endY = 0;
+        
+        this.track.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        });
+        
+        this.track.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        });
+        
+        this.track.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].clientX;
+            endY = e.changedTouches[0].clientY;
+            
+            const deltaX = startX - endX;
+            const deltaY = startY - endY;
+            
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                if (deltaX > 0) {
+                    this.nextSlide();
+                } else {
+                    this.prevSlide();
+                }
+            }
+        });
+    },
+    
+    setupAutoplay() {
+        setInterval(() => {
+            if (!this.isTransitioning) {
+                this.nextSlide();
+            }
+        }, 5000);
+    },
+    
+    goToSlide(index) {
+        if (this.isTransitioning || index === this.currentIndex) return;
+        
+        this.isTransitioning = true;
+        this.currentIndex = index;
+        
+        this.updateCardPositions();
+        this.updateDots();
+        
+        setTimeout(() => {
+            this.isTransitioning = false;
+        }, 600);
+    },
+    
+    updateCardPositions() {
+        this.cards.forEach((card, index) => {
+            // Remove all position classes
+            card.classList.remove('active', 'prev', 'next', 'hidden');
+            
+            if (index === this.currentIndex) {
+                card.classList.add('active');
+            } else if (index === this.getPrevIndex()) {
+                card.classList.add('prev');
+            } else if (index === this.getNextIndex()) {
+                card.classList.add('next');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+    },
+    
+    getPrevIndex() {
+        return (this.currentIndex - 1 + this.cards.length) % this.cards.length;
+    },
+    
+    getNextIndex() {
+        return (this.currentIndex + 1) % this.cards.length;
+    },
+    
+    nextSlide() {
+        const nextIndex = this.getNextIndex();
+        this.goToSlide(nextIndex);
+    },
+    
+    prevSlide() {
+        const prevIndex = this.getPrevIndex();
+        this.goToSlide(prevIndex);
+    },
+    
+    updateDots() {
+        this.dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === this.currentIndex);
+        });
+    }
+};
 
 // Handle resize events
 window.addEventListener('resize', () => {
