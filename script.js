@@ -613,6 +613,43 @@ const reflectionQuestions = {
     }
 };
 
+// Coaching Page Accordions
+const coachingAccordions = {
+    init() {
+        this.setupAccordions();
+    },
+    
+    setupAccordions() {
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const targetId = header.getAttribute('data-accordion');
+                const content = document.getElementById(targetId);
+                const icon = header.querySelector('.accordion-icon');
+                const accordionItem = header.closest('.accordion-item');
+                
+                // Toggle the current accordion
+                const isOpen = accordionItem.classList.contains('active');
+                
+                if (isOpen) {
+                    // Close the accordion
+                    accordionItem.classList.remove('active');
+                    content.style.maxHeight = '0';
+                    icon.textContent = '+';
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    // Open the accordion
+                    accordionItem.classList.add('active');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    icon.textContent = '−';
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+    }
+};
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     cursor.init();
@@ -628,6 +665,7 @@ document.addEventListener('DOMContentLoaded', () => {
     bookingFormToggle.init();
     reflectionQuestions.init();
     testimonialCarousel.init();
+    coachingAccordions.init();
 });
 
 // Testimonial Card Deck
