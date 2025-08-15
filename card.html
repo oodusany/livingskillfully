@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kemi - Living Skillfully</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #2E4A42;
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+            min-height: 100vh;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-container {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(195, 160, 89, 0.1);
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 3rem;
+        }
+
+        .name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #2E4A42;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            color: #777;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .website {
+            font-size: 0.9rem;
+            color: #C3A059;
+            font-weight: 500;
+        }
+
+        .cta-section {
+            margin-bottom: 3rem;
+        }
+
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #2E4A42;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-form {
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(195, 160, 89, 0.2);
+            border-radius: 15px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: #C3A059;
+            box-shadow: 0 0 0 3px rgba(195, 160, 89, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #C3A059 0%, #D4B366 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(195, 160, 89, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-note {
+            font-size: 0.85rem;
+            color: #888;
+            font-style: italic;
+            margin-top: 0.75rem;
+        }
+
+        .social-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .social-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #2E4A42;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, #2E4A42 0%, #344A3E 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            min-height: 56px;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(46, 74, 66, 0.3);
+        }
+
+        .social-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .website-btn {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(195, 160, 89, 0.1) 0%, rgba(212, 179, 102, 0.1) 100%);
+            color: #C3A059;
+            border: 2px solid rgba(195, 160, 89, 0.3);
+        }
+
+        .website-btn:hover {
+            background: linear-gradient(135deg, #C3A059 0%, #D4B366 100%);
+            color: white;
+        }
+
+        .work-section {
+            border-top: 1px solid rgba(195, 160, 89, 0.2);
+            padding-top: 2rem;
+        }
+
+        .work-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 1.8rem;
+            background: transparent;
+            color: #C3A059;
+            text-decoration: none;
+            border: 2px solid #C3A059;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .work-btn:hover {
+            background: #C3A059;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* Success notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: #22c55e;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 480px) {
+            .card-container {
+                padding: 2rem 1.5rem;
+                margin: 0.5rem;
+                border-radius: 20px;
+            }
+
+            .name {
+                font-size: 1.9rem;
+            }
+
+            .social-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .website-btn {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .card-container {
+                padding: 1.5rem 1.2rem;
+            }
+
+            .name {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="name">Kemi</h1>
+            <p class="tagline">Holistic coaching for balance, clarity, and connection</p>
+            <p class="website">livingskillfully.co</p>
+        </div>
+
+        <!-- Primary CTA: Newsletter -->
+        <div class="cta-section">
+            <h2 class="cta-title">Stay Connected</h2>
+            <form class="newsletter-form" id="newsletter-form" action="https://formspree.io/f/xpwrrqny" method="POST">
+                <div class="form-group">
+                    <input type="email" name="email" class="email-input" placeholder="Enter your email" required>
+                    <input type="hidden" name="_subject" value="Newsletter Signup from Digital Card">
+                    <input type="hidden" name="source" value="digital_business_card">
+                </div>
+                <button type="submit" class="submit-btn" id="submit-btn">Join my newsletter</button>
+            </form>
+            <p class="form-note">Thoughtful insights on living skillfully, delivered to your inbox</p>
+        </div>
+
+        <!-- Social Links -->
+        <div class="social-section">
+            <h3 class="social-title">Follow Me</h3>
+            <div class="social-buttons">
+                <a href="https://instagram.com/skillfullivingwkemi" class="social-btn" target="_blank">
+                    <span class="social-icon">📷</span>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://youtube.com/@skillfullivingwkemi" class="social-btn" target="_blank">
+                    <span class="social-icon">📹</span>
+                    <span>YouTube</span>
+                </a>
+                <a href="https://linkedin.com/in/your-profile" class="social-btn" target="_blank">
+                    <span class="social-icon">💼</span>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="index.html" class="social-btn website-btn">
+                    <span class="social-icon">🌐</span>
+                    <span>Visit Website</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Work With Me -->
+        <div class="work-section">
+            <a href="coaching.html" class="work-btn">
+                <span>✨</span>
+                <span>Work with Me</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Newsletter form handler
+        const form = document.getElementById('newsletter-form');
+        const submitBtn = document.getElementById('submit-btn');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Joining...';
+            submitBtn.disabled = true;
+
+            try {
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    showNotification('Welcome! Check your email for confirmation.');
+                    form.reset();
+                    submitBtn.textContent = 'Joined! ✓';
+                    setTimeout(() => {
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }, 3000);
+                } else {
+                    throw new Error('Signup failed');
+                }
+            } catch (error) {
+                showNotification('Something went wrong. Please try again.', 'error');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        function showNotification(message, type = 'success') {
+            // Remove existing notification
+            const existing = document.querySelector('.notification');
+            if (existing) existing.remove();
+
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            
+            if (type === 'error') {
+                notification.style.background = '#ef4444';
+            }
+
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('show'), 100);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 400);
+            }, 4000);
+        }
+    </script>
+</body>
+</html>

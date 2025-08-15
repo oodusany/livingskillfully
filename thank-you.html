@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Living Skillfully Reset Kit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #555;
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .success-card {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(195, 160, 89, 0.15);
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: #C3A059;
+            margin-bottom: 1.5rem;
+            display: block;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .brand-header {
+            margin-bottom: 2rem;
+        }
+
+        .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: #2E4A42;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #2E4A42;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .success-message {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .download-section {
+            background: linear-gradient(135deg, rgba(195, 160, 89, 0.1) 0%, rgba(212, 179, 102, 0.1) 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid rgba(195, 160, 89, 0.2);
+        }
+
+        .download-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: #2E4A42;
+            margin-bottom: 1rem;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #C3A059 0%, #D4B366 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(195, 160, 89, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(195, 160, 89, 0.4);
+        }
+
+        .download-note {
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        .next-steps {
+            margin-bottom: 2.5rem;
+        }
+
+        .next-steps-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: #2E4A42;
+            margin-bottom: 1rem;
+        }
+
+        .next-steps-text {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            display: inline-block;
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2E4A42 0%, #344A3E 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(46, 74, 66, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(46, 74, 66, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #C3A059;
+            border: 2px solid #C3A059;
+        }
+
+        .btn-outline:hover {
+            background: #C3A059;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .footer-note {
+            font-size: 0.85rem;
+            color: #888;
+            font-style: italic;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(195, 160, 89, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .success-card {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .success-title {
+                font-size: 1.8rem;
+            }
+
+            .success-message {
+                font-size: 1rem;
+            }
+
+            .action-buttons {
+                gap: 0.8rem;
+            }
+
+            .action-btn {
+                padding: 0.9rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (min-width: 480px) {
+            .action-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-card">
+            <span class="success-icon">✨</span>
+            
+            <div class="brand-header">
+                <div class="brand-name">Living Skillfully</div>
+            </div>
+
+            <h1 class="success-title">Your Reset Kit is on its way!</h1>
+            
+            <p class="success-message">
+                Thank you for taking this pause. Check your email inbox in the next few minutes for your <strong>Living Skillfully Reset Kit</strong>. If you don't see it, peek in your spam folder — sometimes good things get lost there.
+            </p>
+
+            <div class="download-section">
+                <h2 class="download-title">Download Your Kit Now</h2>
+                <a href="reset-kit.pdf" class="download-btn" target="_blank">
+                    📥 Download Reset Kit PDF
+                </a>
+                <p class="download-note">
+                    Direct download link (backup in case email is delayed)
+                </p>
+            </div>
+
+            <div class="next-steps">
+                <h2 class="next-steps-title">What's Next?</h2>
+                <p class="next-steps-text">
+                    Take your time with the exercises. There's no rush — this is your space to reconnect and recalibrate.
+                </p>
+                
+                <div class="action-buttons">
+                    <a href="index.html" class="action-btn btn-primary">Return to Home</a>
+                    <a href="coaching.html" class="action-btn btn-outline">Learn About Our Coaching</a>
+                </div>
+            </div>
+
+            <p class="footer-note">
+                Remember: You'll receive a gentle follow-up email about our free discovery call. No pressure, just an invitation to explore working together.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
