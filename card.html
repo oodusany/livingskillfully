@@ -38,6 +38,16 @@
             text-align: center;
         }
 
+        .profile-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem auto;
+            display: block;
+            border: 3px solid rgba(195, 160, 89, 0.2);
+        }
+
         .header {
             margin-bottom: 3rem;
         }
@@ -146,40 +156,48 @@
         }
 
         .social-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 0.75rem;
             margin-bottom: 1.5rem;
+            justify-content: center;
         }
 
         .social-btn {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            padding: 1rem;
-            background: linear-gradient(135deg, #2E4A42 0%, #344A3E 100%);
-            color: white;
+            justify-content: flex-start;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: transparent;
+            color: #2E4A42;
             text-decoration: none;
-            border-radius: 15px;
+            border: 2px solid rgba(195, 160, 89, 0.4);
+            border-radius: 20px;
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             transition: all 0.3s ease;
-            min-height: 56px;
+            min-height: auto;
         }
 
         .social-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(46, 74, 66, 0.3);
+            border-color: #C3A059;
+            color: #C3A059;
+            box-shadow: 0 4px 15px rgba(195, 160, 89, 0.2);
         }
 
         .social-icon {
-            font-size: 1.2rem;
+            font-size: 1rem;
             flex-shrink: 0;
         }
 
+        .website-row {
+            display: flex;
+            justify-content: center;
+        }
+
         .website-btn {
-            grid-column: span 2;
             background: linear-gradient(135deg, rgba(195, 160, 89, 0.1) 0%, rgba(212, 179, 102, 0.1) 100%);
             color: #C3A059;
             border: 2px solid rgba(195, 160, 89, 0.3);
@@ -254,9 +272,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .website-btn {
-                grid-column: span 1;
-            }
         }
 
         @media (max-width: 360px) {
@@ -274,8 +289,9 @@
     <div class="card-container">
         <!-- Header -->
         <div class="header">
+            <img src="logo.png" alt="Kemi" class="profile-photo">
             <h1 class="name">Kemi</h1>
-            <p class="tagline">Holistic coaching for balance, clarity, and connection</p>
+            <p class="tagline">Expand Boldly. Root Deeply. Live Skillfully.</p>
             <p class="website">livingskillfully.co</p>
         </div>
 
@@ -290,7 +306,7 @@
                 </div>
                 <button type="submit" class="submit-btn" id="submit-btn">Join my newsletter</button>
             </form>
-            <p class="form-note">Thoughtful insights on living skillfully, delivered to your inbox</p>
+            <p class="form-note">A monthly pause: reflections & practices to help you live skillfully.</p>
         </div>
 
         <!-- Social Links -->
@@ -309,6 +325,8 @@
                     <span class="social-icon">💼</span>
                     <span>LinkedIn</span>
                 </a>
+            </div>
+            <div class="website-row">
                 <a href="index.html" class="social-btn website-btn">
                     <span class="social-icon">🌐</span>
                     <span>Visit Website</span>
@@ -320,8 +338,13 @@
         <div class="work-section">
             <a href="coaching.html" class="work-btn">
                 <span>✨</span>
-                <span>Work with Me</span>
+                <span>Explore Coaching</span>
             </a>
+        </div>
+
+        <!-- Signature -->
+        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(195, 160, 89, 0.2); text-align: center; font-style: italic; color: #777; font-size: 0.9rem;">
+            Live skillfully. <strong>Thrive wholly.</strong>
         </div>
     </div>
 
