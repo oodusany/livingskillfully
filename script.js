@@ -650,6 +650,37 @@ const coachingAccordions = {
     }
 };
 
+// Methodology Pillars functionality
+const methodologyPillars = {
+    init() {
+        this.setupPillarToggles();
+    },
+    
+    setupPillarToggles() {
+        const pillarToggles = document.querySelectorAll('.pillar-toggle');
+        
+        pillarToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const pillarCard = toggle.closest('.pillar-card');
+                const details = pillarCard.querySelector('.pillar-details');
+                const isExpanded = toggle.classList.contains('expanded');
+                
+                if (isExpanded) {
+                    // Close the pillar
+                    details.style.display = 'none';
+                    toggle.classList.remove('expanded');
+                    toggle.textContent = 'Learn More';
+                } else {
+                    // Open the pillar
+                    details.style.display = 'block';
+                    toggle.classList.add('expanded');
+                    toggle.textContent = 'Show Less';
+                }
+            });
+        });
+    }
+};
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     cursor.init();
@@ -666,6 +697,7 @@ document.addEventListener('DOMContentLoaded', () => {
     reflectionQuestions.init();
     testimonialCarousel.init();
     coachingAccordions.init();
+    methodologyPillars.init();
 });
 
 // Testimonial Card Deck
