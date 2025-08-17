@@ -1,4 +1,11 @@
 // Custom Cursor
+// Mailer lite 
+ (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '1738459');
+
 const cursor = {
     dot: document.querySelector('[data-cursor-dot]'),
     outline: document.querySelector('[data-cursor-outline]'),
@@ -23,7 +30,7 @@ const cursor = {
         });
         
         // Cursor interactions
-        const hoverElements = document.querySelectorAll('a, button, .blog-card, .aspect-card, .pricing-card');
+        const hoverElements = document.querySelectorAll('a, button, .blog-card, .aspect-card, .pricing-card, .reset-kit-link');
         
         hoverElements.forEach(element => {
             element.addEventListener('mouseenter', () => {
@@ -650,37 +657,6 @@ const coachingAccordions = {
     }
 };
 
-// Methodology Pillars functionality
-const methodologyPillars = {
-    init() {
-        this.setupPillarToggles();
-    },
-    
-    setupPillarToggles() {
-        const pillarToggles = document.querySelectorAll('.pillar-toggle');
-        
-        pillarToggles.forEach(toggle => {
-            toggle.addEventListener('click', () => {
-                const pillarCard = toggle.closest('.pillar-card');
-                const details = pillarCard.querySelector('.pillar-details');
-                const isExpanded = toggle.classList.contains('expanded');
-                
-                if (isExpanded) {
-                    // Close the pillar
-                    details.style.display = 'none';
-                    toggle.classList.remove('expanded');
-                    toggle.textContent = 'Learn More';
-                } else {
-                    // Open the pillar
-                    details.style.display = 'block';
-                    toggle.classList.add('expanded');
-                    toggle.textContent = 'Show Less';
-                }
-            });
-        });
-    }
-};
-
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     cursor.init();
@@ -697,7 +673,7 @@ document.addEventListener('DOMContentLoaded', () => {
     reflectionQuestions.init();
     testimonialCarousel.init();
     coachingAccordions.init();
-    methodologyPillars.init();
+    modalHandler.init();
 });
 
 // Testimonial Card Deck
@@ -832,6 +808,187 @@ const testimonialCarousel = {
         this.dots.forEach((dot, index) => {
             dot.classList.toggle('active', index === this.currentIndex);
         });
+    }
+};
+
+// Modal Handler for Reset Kit
+const modalHandler = {
+    modal: null,
+    overlay: null,
+    
+    init() {
+        this.modal = document.getElementById('reset-modal');
+        this.overlay = this.modal;
+        this.setupModalEvents();
+        this.setupFormSubmission();
+    },
+    
+    setupModalEvents() {
+        // Main CTA button
+        const openBtn = document.getElementById('open-reset-modal');
+        const closeBtn = document.getElementById('close-reset-modal');
+        
+        if (openBtn) {
+            openBtn.addEventListener('click', () => this.openModal());
+        }
+        
+        // All Reset Kit links throughout the site
+        const resetKitLinks = document.querySelectorAll('.reset-kit-link');
+        resetKitLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.openModal();
+            });
+        });
+        
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => this.closeModal());
+        }
+        
+        // Close on overlay click
+        if (this.overlay) {
+            this.overlay.addEventListener('click', (e) => {
+                if (e.target === this.overlay) {
+                    this.closeModal();
+                }
+            });
+        }
+        
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.modal.classList.contains('active')) {
+                this.closeModal();
+            }
+        });
+    },
+    
+    openModal() {
+        this.modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    },
+    
+    closeModal() {
+        this.modal.classList.remove('active');
+        document.body.style.overflow = '';
+    },
+    
+    async downloadPDF(filename) {
+        try {
+            // Fetch the PDF file as a blob
+            const response = await fetch(filename);
+            if (!response.ok) throw new Error('PDF not found');
+            
+            const blob = await response.blob();
+            
+            // Create object URL for the blob
+            const url = window.URL.createObjectURL(blob);
+            
+            // Create temporary anchor element for download
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename.split('/').pop(); // Get just the filename
+            link.style.display = 'none';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Clean up the object URL
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Download failed:', error);
+            // Fallback: open PDF in new tab if download fails
+            window.open(filename, '_blank');
+        }
+    },
+    
+    setupFormSubmission() {
+        const form = document.querySelector('.modal-form');
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.submitForm(form);
+            });
+        }
+    },
+    
+    async submitForm(form) {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        
+        // Show loading state
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+        
+        try {
+            const formData = new FormData(form);
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                // Trigger PDF download
+                await this.downloadPDF('Masturbation brochure.pdf');
+                this.showSuccessNotification();
+                form.reset();
+                // Close modal after successful submission
+                setTimeout(() => this.closeModal(), 1500);
+            } else {
+                throw new Error('Form submission failed');
+            }
+        } catch (error) {
+            this.showErrorNotification();
+        } finally {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
+    },
+    
+    showSuccessNotification() {
+        this.createNotification(
+            'Thank you! Your Reset Kit is downloading now, and you\'ll also receive an email shortly.',
+            'success'
+        );
+    },
+    
+    showErrorNotification() {
+        this.createNotification(
+            'Something went wrong. Please try again or contact us directly.',
+            'error'
+        );
+    },
+    
+    createNotification(message, type) {
+        // Remove any existing notifications
+        const existing = document.querySelector('.form-notification');
+        if (existing) existing.remove();
+        
+        const notification = document.createElement('div');
+        notification.className = `form-notification ${type}`;
+        notification.innerHTML = `
+            <div class="notification-content">
+                <span class="notification-icon">${type === 'success' ? '✓' : '⚠'}</span>
+                <span class="notification-message">${message}</span>
+                <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => notification.classList.add('show'), 100);
+        
+        // Auto-remove after 6 seconds
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }
+        }, 6000);
     }
 };
 
