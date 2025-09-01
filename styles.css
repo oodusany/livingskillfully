@@ -3939,10 +3939,41 @@ s
 }
 
 .modal-description {
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #666;
     margin-bottom: 1.5rem;
     line-height: 1.5;
+}
+
+.modal-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+    text-align: left;
+}
+
+.modal-benefits li {
+    font-size: 1rem;
+    color: #2E4A42;
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.modal-benefits li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #C3A059;
+    font-weight: bold;
+}
+
+.modal-reassurance {
+    font-size: 0.85rem;
+    color: #888;
+    text-align: center;
+    margin-top: 1rem;
+    line-height: 1.4;
 }
 
 .modal-features {
