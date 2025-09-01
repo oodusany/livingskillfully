@@ -216,6 +216,7 @@ h1, h2, h3, h4, h5, h6 {
     background: transparent;
     color: #C3A059;
     border: 2px solid #C3A059;
+    font-weight: 400;
 }
 
 .btn-outline:hover {
@@ -312,6 +313,50 @@ h1, h2, h3, h4, h5, h6 {
     font-style: italic;
     font-weight: 400;
     font-size: 1.1em;
+}
+
+.hero-tagline {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 3rem;
+    line-height: 1.5;
+    max-width: 500px;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.6s forwards;
+}
+
+.hero-primary-cta {
+    margin-bottom: 2rem;
+}
+
+.primary-cta-flow {
+    text-align: center;
+}
+
+.hero-divider {
+    text-align: center;
+    margin: 2rem 0;
+    position: relative;
+}
+
+.hero-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(195, 160, 89, 0.3);
+    z-index: 1;
+}
+
+.hero-divider span {
+    background: #E8E0D5;
+    padding: 0 1rem;
+    color: #999;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 2;
 }
 
 .hero-subtitle {

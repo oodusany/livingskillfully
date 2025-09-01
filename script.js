@@ -826,10 +826,15 @@ const modalHandler = {
     setupModalEvents() {
         // Main CTA button
         const openBtn = document.getElementById('open-reset-modal');
+        const secondaryBtn = document.getElementById('secondary-reset-modal');
         const closeBtn = document.getElementById('close-reset-modal');
         
         if (openBtn) {
             openBtn.addEventListener('click', () => this.openModal());
+        }
+        
+        if (secondaryBtn) {
+            secondaryBtn.addEventListener('click', () => this.openModal());
         }
         
         // All Reset Kit links throughout the site
