@@ -165,28 +165,58 @@ const forms = {
         }
     },
     
-    handleBookingSubmission(form) {
-        const formData = new FormData(form);
+    async handleBookingSubmission(form) {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
         
-        // Submit to Formspree
-        fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        })
-        .then(response => {
+        // Show loading state
+        submitBtn.textContent = 'Submitting...';
+        submitBtn.disabled = true;
+        
+        try {
+            const formData = new FormData(form);
+            
+            // Submit to Formspree
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
             if (response.ok) {
                 this.showSuccessMessage('Thank you! I\'ll be in touch soon to schedule your free connection session.');
                 form.reset();
+                submitBtn.textContent = 'Application Sent! ✓';
+                
+                // Hide the form after successful submission
+                const formContainer = document.getElementById('booking-form-container');
+                if (formContainer) {
+                    setTimeout(() => {
+                        formContainer.style.display = 'none';
+                        const toggleBtn = document.getElementById('booking-form-toggle');
+                        if (toggleBtn) {
+                            toggleBtn.classList.remove('expanded');
+                            toggleBtn.querySelector('.toggle-text').textContent = 'Apply for Your Free Connection Session';
+                        }
+                    }, 3000);
+                }
             } else {
-                this.showErrorMessage('Something went wrong. Please try again or email me directly.');
+                throw new Error('Form submission failed');
             }
-        })
-        .catch(error => {
-            this.showErrorMessage('Something went wrong. Please try again or email me directly.');
-        });
+        } catch (error) {
+            console.error('Form submission error:', error);
+            this.showErrorMessage('Something went wrong. Please try again or email me directly at kemi@livingskillfully.co');
+        } finally {
+            // Reset button after 3 seconds if not successful
+            setTimeout(() => {
+                if (submitBtn.textContent !== 'Application Sent! ✓') {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            }, 3000);
+        }
     },
     
     handleContactSubmission(form) {
