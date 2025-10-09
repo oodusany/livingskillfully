@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Alignment Assessment - Living Skillfully</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KXD333XBMQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-KXD333XBMQ');
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #2E4A42;
+            background-color: #E8E0D5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            margin: 2rem auto;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(195, 160, 89, 0.2);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #C3A059;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            font-size: 0.9rem;
+            color: #2E4A42;
+            background: rgba(232, 224, 213, 0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            z-index: 999;
+        }
+
+        /* Brand Header */
+        .brand-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .brand-link {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.25rem;
+        }
+
+        .brand-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #2E4A42;
+        }
+
+        .brand-accent {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+            font-style: italic;
+            color: #C3A059;
+        }
+
+        /* Screens */
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            text-align: center;
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .decorative-star {
+            font-size: 2.5rem;
+            color: #C3A059;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #2E4A42;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .breath-prompt {
+            background: rgba(195, 160, 89, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #C3A059;
+            margin-bottom: 2rem;
+            font-style: italic;
+            color: #2E4A42;
+        }
+
+        /* Question Screen */
+        .question-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .transition-prompt {
+            background: rgba(195, 160, 89, 0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #C3A059;
+            margin-bottom: 2rem;
+            font-style: italic;
+            color: #2E4A42;
+            font-size: 0.95rem;
+        }
+
+        .question-theme {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #C3A059;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #2E4A42;
+            margin-bottom: 2rem;
+            line-height: 1.3;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .option {
+            background: rgba(195, 160, 89, 0.05);
+            border: 2px solid transparent;
+            padding: 1.25rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+            color: #2E4A42;
+            text-align: left;
+        }
+
+        .option:hover {
+            background: rgba(195, 160, 89, 0.1);
+            border-color: rgba(195, 160, 89, 0.3);
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            background: rgba(195, 160, 89, 0.15);
+            border-color: #C3A059;
+        }
+
+        /* Micro-pause Screen */
+        .micropause-screen {
+            text-align: center;
+        }
+
+        .word-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 1rem 1.5rem;
+            font-size: 1.2rem;
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            border: 2px solid #C3A059;
+            border-radius: 12px;
+            background: white;
+            color: #2E4A42;
+            margin: 2rem auto;
+            display: block;
+        }
+
+        .word-input::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        /* Results Screen */
+        .results-screen {
+            text-align: center;
+        }
+
+        .results-card {
+            background: white;
+            padding: 3rem 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .band-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #2E4A42;
+            margin-bottom: 1rem;
+        }
+
+        .band-description {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .insight-section {
+            text-align: left;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(195, 160, 89, 0.05);
+            border-radius: 12px;
+        }
+
+        .insight-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #2E4A42;
+            margin-bottom: 0.75rem;
+        }
+
+        .insight-text {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: #C3A059;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #a68745;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(195, 160, 89, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #2E4A42;
+            border: 2px solid #C3A059;
+        }
+
+        .btn-outline:hover {
+            background: #C3A059;
+            color: white;
+        }
+
+        .btn-next {
+            margin-top: 1.5rem;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .btn-next.enabled {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        /* Email Capture */
+        .email-capture {
+            background: rgba(195, 160, 89, 0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+
+        .email-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 0.875rem 1.25rem;
+            font-size: 1rem;
+            border: 2px solid #C3A059;
+            border-radius: 8px;
+            background: white;
+            color: #2E4A42;
+            margin: 1rem auto;
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .welcome-title, .band-title {
+                font-size: 2rem;
+            }
+
+            .question-text {
+                font-size: 1.5rem;
+            }
+
+            .question-card, .results-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .btn {
+                padding: 0.875rem 2rem;
+                font-size: 0.95rem;
+            }
+
+            .cta-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="progress-text" id="progressText" style="display: none;">Question 1 of 15</div>
+
+    <div class="container">
+        <!-- Brand Header -->
+        <div class="brand-header">
+            <a href="index.html" class="brand-link">
+                <span class="brand-text">Living</span>
+                <span class="brand-accent">Skillfully</span>
+            </a>
+        </div>
+
+        <!-- Welcome Screen -->
+        <div class="screen active" id="welcomeScreen">
+            <div class="welcome-screen">
+                <div class="decorative-star">✷</div>
+                <h1 class="welcome-title">Where Are You, Really?</h1>
+                <p class="welcome-subtitle">
+                    A gentle, precise assessment to help you understand your current season—
+                    and what wants to shift.
+                </p>
+                <div class="breath-prompt">
+                    Notice your breath. Is it shallow, steady, or deepening?
+                </div>
+                <p style="color: #666; margin-bottom: 2rem;">
+                    This will take 3-5 minutes. Answer honestly—there are no wrong responses.
+                </p>
+                <button class="btn btn-primary" onclick="startAssessment()">Begin Assessment</button>
+            </div>
+        </div>
+
+        <!-- Question Screens (Generated by JS) -->
+        <div id="questionContainer"></div>
+
+        <!-- Micro-pause Screen -->
+        <div class="screen" id="micropauseScreen">
+            <div class="question-card micropause-screen">
+                <div class="decorative-star">✷</div>
+                <h2 class="question-text">One word for your current season?</h2>
+                <p style="color: #666; margin-bottom: 1rem;">
+                    Whatever arises first—no overthinking.
+                </p>
+                <input
+                    type="text"
+                    class="word-input"
+                    id="seasonWord"
+                    placeholder="Type one word..."
+                    maxlength="30"
+                >
+                <button class="btn btn-primary btn-next enabled" onclick="showResults()">See Your Results</button>
+            </div>
+        </div>
+
+        <!-- Results Screen (Generated by JS) -->
+        <div class="screen" id="resultsScreen">
+            <div class="results-screen">
+                <div class="results-card" id="resultsContent">
+                    <!-- Results content injected by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assessment.js"></script>
+    <script src="assessment-results.js"></script>
+</body>
+</html>
