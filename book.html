@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Free Connection Call — Living Skillfully</title>
+    <meta name="description" content="Book a free 45-minute connection call with Kemi Odusanya. Explore your goals, navigate what you're facing right now, and see if we're the right fit.">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Book Your Free Connection Call — Living Skillfully">
+    <meta property="og:description" content="45 minutes via Zoom. Space to explore your goals and challenges. No cost. No pressure. Just clarity.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://livingskillfully.com/book.html">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Book Your Free Connection Call — Living Skillfully">
+    <meta name="twitter:description" content="45 minutes via Zoom. Space to explore your goals and challenges. No cost. No pressure. Just clarity.">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KXD333XBMQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-KXD333XBMQ');
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #2E4A42;
+            background-color: #F4F0EB;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Main content spacing to account for fixed header */
+        main {
+            padding-top: 120px;
+            min-height: 100vh;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Scheduler Loading State */
+        .scheduler-loading {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            margin-top: 2rem;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(195, 160, 89, 0.2);
+            border-top-color: #C3A059;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: 1.5rem;
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* Focus trap for mobile menu */
+        body.menu-open {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+
+    <!-- Header with Navigation -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <a href="index.html" class="brand-link">
+                    <img src="logo.png" alt="Living Skillfully Logo" class="brand-logo">
+                    <div class="brand-text-container">
+                        <span class="brand-text">Living</span>
+                        <span class="brand-accent">Skillfully</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html#about" class="nav-link" data-text="About Me" onclick="trackEvent('nav_click', {label: 'about', page: 'book'});">Me</a>
+                <a href="index.html#how-it-works" class="nav-link" data-text="How It Works" onclick="trackEvent('nav_click', {label: 'how', page: 'book'});">Us</a>
+                <a href="index.html#testimonials" class="nav-link" data-text="Musings" onclick="trackEvent('nav_click', {label: 'testimonials', page: 'book'});">How</a>
+                <a href="#scheduler" class="nav-link cta-link" onclick="trackEvent('book_call_click', {placement: 'nav', page: 'book'}); scrollToScheduler(event);" data-text="Book a Call">Book a Call</a>
+            </div>
+
+            <div class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" role="button" tabindex="0">
+                <span class="toggle-line"></span>
+                <span class="toggle-line"></span>
+                <span class="toggle-line"></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-container">
+            <!-- Booking Section (Identical Copy from index-new.html) -->
+            <section id="scheduler" class="book-session">
+            <div class="container">
+                <div class="booking-content">
+                    <div class="booking-text">
+                        <span class="section-eyebrow">Free Connection Session</span>
+                        <h2 class="section-title">Book Your Free 45-Minute Connection Call</h2>
+                        <p class="booking-description">In this session, we'll explore your goals, talk through what you're navigating right now, and see if we're the right fit to work together.</p>
+
+                        <div class="session-details">
+                            <div class="detail-item">
+                                <span class="detail-icon">✅</span>
+                                <span class="detail-text">45 minutes via Zoom</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-icon">✅</span>
+                                <span class="detail-text">Space to explore your goals and challenges</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-icon">✅</span>
+                                <span class="detail-text">No cost. No pressure. Just clarity.</span>
+                            </div>
+                        </div>
+
+                        <div class="stay-connected-option">
+                            <div class="booking-option">
+                                <div class="option-content">
+                                    <h4 class="option-title">Stay Connected</h4>
+                                    <p class="option-description">Not ready to book yet? Join my community for tools, reflections, and updates.</p>
+                                    <a href="index.html#contact" class="btn btn-outline">Join My Community</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="booking-form-section">
+                        <button class="booking-form-toggle" id="booking-form-toggle">
+                            <span class="toggle-icon">✷</span>
+                            <span class="toggle-text">Apply for Your Free Connection Session</span>
+                            <span class="toggle-arrow">→</span>
+                        </button>
+
+                        <div class="booking-form-container" id="booking-form-container" style="display: none;">
+                            <form class="booking-form" action="https://formspree.io/f/mgvylore" method="POST" id="booking-form">
+                            <h3>Apply for your free Connection Session</h3>
+                            <div class="form-group">
+                                <input type="text" name="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" placeholder="Email Address" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">What brings you to coaching right now?</label>
+                                <textarea name="drawing_to_coaching" placeholder="Share what's bringing you to this point..." rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">What would you like to explore or change?</label>
+                                <textarea name="hope_to_explore" placeholder="What are you hoping to work on or change..." rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Have you worked with a coach or therapist before? If so, what helped (or didn't)?</label>
+                                <textarea name="previous_experience" placeholder="Share your experience or write 'No' if this is your first time..." rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">What's one area of your life you feel ready to shift?</label>
+                                <textarea name="area_for_change" placeholder="Describe the area where you feel ready for shift..." rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Why are you drawn to working with me?</label>
+                                <textarea name="why_me" placeholder="What drew you to my approach or website..." rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Are you ready to commit time and energy to this kind of work?</label>
+                                <select name="commitment_readiness" required>
+                                    <option value="">Select your readiness level...</option>
+                                    <option value="Yes, absolutely">Yes, absolutely</option>
+                                    <option value="I'm curious but unsure">I'm curious but unsure</option>
+                                    <option value="Not at the moment">Not at the moment</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Anything else you'd like me to know before our call?</label>
+                                <textarea name="additional_notes" placeholder="Optional — any context that would be helpful..." rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-large">Submit Application</button>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+            <!-- Optional: Scheduler Widget Placeholder (for future lazy-loading) -->
+            <div id="scheduler-container" class="scheduler-loading" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p class="loading-text">Loading scheduler...</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // ==========================================
+        // UTM Parameter Persistence
+        // ==========================================
+        const UTMManager = {
+            params: {},
+
+            init() {
+                this.captureUTMs();
+                this.persistUTMs();
+            },
+
+            captureUTMs() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+
+                utmKeys.forEach(key => {
+                    const value = urlParams.get(key);
+                    if (value) {
+                        this.params[key] = value;
+                        sessionStorage.setItem(key, value);
+                    } else {
+                        const stored = sessionStorage.getItem(key);
+                        if (stored) {
+                            this.params[key] = stored;
+                        }
+                    }
+                });
+            },
+
+            persistUTMs() {
+                // Add UTM params to all internal links
+                document.querySelectorAll('a[href^="/"], a[href^="./"], a[href^="../"], a[href^="index.html"], a[href^="book.html"]').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        const url = new URL(link.href);
+                        Object.keys(this.params).forEach(key => {
+                            url.searchParams.set(key, this.params[key]);
+                        });
+                        link.href = url.toString();
+                    });
+                });
+            },
+
+            getUTMString() {
+                return Object.keys(this.params)
+                    .map(key => `${key}=${encodeURIComponent(this.params[key])}`)
+                    .join('&');
+            }
+        };
+
+        // ==========================================
+        // Analytics Helper
+        // ==========================================
+        function trackEvent(eventName, params) {
+            if (typeof gtag !== 'undefined') {
+                // Add UTM params to analytics events
+                const enrichedParams = {
+                    ...params,
+                    ...UTMManager.params
+                };
+                gtag('event', eventName, enrichedParams);
+            }
+        }
+
+        // ==========================================
+        // Navigation & Mobile Menu
+        // ==========================================
+        const BookNavigation = {
+            toggle: document.getElementById('nav-toggle'),
+            menu: document.getElementById('nav-menu'),
+            focusableElements: null,
+            firstFocusable: null,
+            lastFocusable: null,
+
+            init() {
+                this.setupToggle();
+                this.setupKeyboardNav();
+                this.focusableElements = this.menu.querySelectorAll('a, button, [tabindex="0"]');
+                this.firstFocusable = this.focusableElements[0];
+                this.lastFocusable = this.focusableElements[this.focusableElements.length - 1];
+            },
+
+            setupToggle() {
+                this.toggle.addEventListener('click', () => this.toggleMenu());
+                this.toggle.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.toggleMenu();
+                    }
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!this.toggle.contains(e.target) && !this.menu.contains(e.target)) {
+                        this.closeMenu();
+                    }
+                });
+            },
+
+            setupKeyboardNav() {
+                // ESC to close menu
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && this.menu.classList.contains('active')) {
+                        this.closeMenu();
+                        this.toggle.focus();
+                    }
+                });
+
+                // Focus trap in mobile menu
+                this.menu.addEventListener('keydown', (e) => {
+                    if (e.key === 'Tab' && this.menu.classList.contains('active')) {
+                        if (e.shiftKey) {
+                            if (document.activeElement === this.firstFocusable) {
+                                e.preventDefault();
+                                this.lastFocusable.focus();
+                            }
+                        } else {
+                            if (document.activeElement === this.lastFocusable) {
+                                e.preventDefault();
+                                this.firstFocusable.focus();
+                            }
+                        }
+                    }
+                });
+            },
+
+            toggleMenu() {
+                const isActive = this.menu.classList.toggle('active');
+                this.toggle.classList.toggle('active');
+                document.body.classList.toggle('menu-open', isActive);
+
+                if (isActive) {
+                    this.firstFocusable.focus();
+                    trackEvent('mobile_menu_opened', { page: 'book' });
+                }
+            },
+
+            closeMenu() {
+                this.menu.classList.remove('active');
+                this.toggle.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
+        };
+
+        // ==========================================
+        // Smooth Scroll to Scheduler
+        // ==========================================
+        function scrollToScheduler(event) {
+            event.preventDefault();
+            const scheduler = document.getElementById('scheduler');
+            if (scheduler) {
+                const offsetTop = scheduler.offsetTop - 100;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // ==========================================
+        // Form Tracking (Toggle handled by script.js)
+        // ==========================================
+        // Track form opens by observing DOM changes
+        const observeFormToggle = () => {
+            const formContainer = document.getElementById('booking-form-container');
+            if (formContainer) {
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                            if (formContainer.style.display === 'block') {
+                                trackEvent('booking_form_opened', {
+                                    location: 'book_page',
+                                    page: 'book'
+                                });
+                            }
+                        }
+                    });
+                });
+                observer.observe(formContainer, { attributes: true });
+            }
+        };
+
+        // Form submission tracking
+        const trackFormSubmission = () => {
+            const bookingForm = document.getElementById('booking-form');
+            if (bookingForm) {
+                bookingForm.addEventListener('submit', function() {
+                    trackEvent('booking_form_submitted', {
+                        location: 'book_page',
+                        page: 'book',
+                        form_id: 'booking-form'
+                    });
+                });
+            }
+        };
+
+        // ==========================================
+        // Lazy-load Scheduler
+        // ==========================================
+        function lazyLoadScheduler() {
+            const schedulerContainer = document.getElementById('scheduler-container');
+            if (schedulerContainer) {
+                schedulerContainer.style.display = 'block';
+
+                // Example: Load Calendly or other scheduler
+                // const script = document.createElement('script');
+                // script.src = 'https://assets.calendly.com/assets/external/widget.js';
+                // script.async = true;
+                // script.onload = () => {
+                //     Calendly.initInlineWidget({
+                //         url: 'https://calendly.com/your-username/45min',
+                //         parentElement: schedulerContainer
+                //     });
+                // };
+                // document.body.appendChild(script);
+
+                trackEvent('scheduler_loaded', {
+                    location: 'book_page',
+                    page: 'book'
+                });
+            }
+        }
+
+        // Intersection Observer for lazy-loading
+        if ('IntersectionObserver' in window) {
+            const schedulerObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Uncomment to enable lazy-loading when section is visible
+                        // lazyLoadScheduler();
+                        // schedulerObserver.disconnect();
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const schedulerSection = document.getElementById('scheduler');
+            if (schedulerSection) {
+                schedulerObserver.observe(schedulerSection);
+            }
+        }
+
+        // ==========================================
+        // Initialize Everything
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            UTMManager.init();
+            BookNavigation.init();
+            observeFormToggle();
+            trackFormSubmission();
+
+            // Track page view with UTM params
+            trackEvent('page_view', {
+                page_title: 'Book Connection Call',
+                page_location: window.location.href,
+                page_path: '/book.html'
+            });
+        });
+    </script>
+
+    <!-- MailerLite Universal -->
+    <script>
+        (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+        .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+        n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+        (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+        ml('account', '1738459');
+    </script>
+</body>
+</html>

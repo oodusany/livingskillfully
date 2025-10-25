@@ -67,7 +67,7 @@ h1, h2, h3, h4, h5, h6 {
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: rgba(232, 224, 213, 0.95);
+    background: #e8e0d5;
     backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(195, 160, 89, 0.1);
     transition: all 0.3s ease;
@@ -543,11 +543,35 @@ section {
     background: #E8E0D5;
 }
 
+.about-me-section {
+    background: #E8E0D5;
+    padding: 6rem 0;
+}
+
 .about-content {
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
     gap: 4rem;
     align-items: start;
+}
+
+.bio-credentials {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(195, 160, 89, 0.05);
+    border-radius: 12px;
+    border-left: 3px solid #C3A059;
+}
+
+.bio-credentials p {
+    font-size: 1rem;
+    color: #2E4A42;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.bio-credentials p:last-child {
+    margin-bottom: 0;
 }
 
 .text-block {
@@ -4262,5 +4286,721 @@ s
     .hero-cta-section .btn-cta-bounce {
         padding: 1rem 1.8rem;
         font-size: 1rem;
+    }
+}
+/* ===== NEW LANDING PAGE STYLES (index-new.html) ===== */
+
+/* Hero Assessment Section */
+.hero-assessment {
+    background: #2E4A42;
+    color: #F4F0EB;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 120px 2rem 80px;
+}
+
+.hero-badge {
+    position: absolute;
+    top: 140px;
+    left: 2rem;
+    background: rgba(195, 160, 89, 0.2);
+    color: #F4F0EB;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    z-index: 10;
+}
+
+.hero-content-center {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-title-large {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 2rem 0 1.5rem;
+    color: #F4F0EB;
+}
+
+.hero-subtitle-light {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: rgba(244, 240, 235, 0.85);
+    margin-bottom: 3rem;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.6;
+}
+
+.scroll-line {
+    width: 2px;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, #C3A059);
+    animation: scrollPulse 2s infinite;
+}
+
+.scroll-text {
+    font-size: 0.85rem;
+    color: #F4F0EB;
+}
+
+@keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+/* I Help Statement */
+.i-help-section {
+    padding: 80px 2rem;
+    background: #F4F0EB;
+    text-align: center;
+}
+
+.decorative-star-small {
+    font-size: 2rem;
+    color: #C3A059;
+    margin-bottom: 1rem;
+}
+
+.i-help-statement {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #2E4A42;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Assessment Intro Section */
+.assessment-intro-section {
+    padding: 100px 2rem;
+    background: white;
+}
+
+.section-header-center {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+}
+
+.section-description {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #666;
+    margin-top: 1rem;
+}
+
+.assessment-preview-card {
+    max-width: 650px;
+    margin: 0 auto;
+    background: #F4F0EB;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.assessment-preview-header {
+    margin-bottom: 2rem;
+}
+
+.preview-badges {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.badge {
+    background: #C3A059;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.preview-progress {
+    text-align: center;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(195, 160, 89, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: #C3A059;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.assessment-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+}
+
+.assessment-benefits li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.benefit-icon {
+    color: #C3A059;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.assessment-preview-cta {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.cta-helper {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #888;
+    font-style: italic;
+}
+
+/* Four Pillars Section */
+.pillars-section {
+    padding: 100px 2rem;
+    background: #E8E0D5;
+}
+
+.pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1140px;
+    margin: 3rem auto;
+}
+
+.pillar-card {
+    background: white;
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pillar-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.pillar-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.pillar-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #2E4A42;
+    margin-bottom: 0.75rem;
+}
+
+.pillar-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #666;
+}
+
+.pillars-cta {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+/* Credibility Section */
+.credibility-section {
+    padding: 100px 2rem;
+    background: white;
+}
+
+.credibility-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    max-width: 1140px;
+    margin: 3rem auto 0;
+    align-items: start;
+}
+
+.credibility-bio {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.bio-image {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.bio-photo {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.bio-text p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 1rem;
+}
+
+.bio-text strong {
+    color: #2E4A42;
+    font-weight: 600;
+}
+
+.credibility-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.stat-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 1.5rem;
+    background: #F4F0EB;
+    border-radius: 12px;
+}
+
+.stat-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.stat-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+
+.stat-source {
+    font-size: 0.85rem;
+    color: #888;
+    font-style: italic;
+    margin-top: 0.25rem;
+}
+
+.stats-footnote {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 1rem;
+}
+
+/* CTA Repeat Section */
+.cta-repeat-section {
+    padding: 100px 2rem;
+    background: #2E4A42;
+    text-align: center;
+}
+
+.cta-repeat-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: #F4F0EB;
+    margin-bottom: 1.5rem;
+}
+
+.cta-description {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: rgba(244, 240, 235, 0.85);
+    margin-bottom: 3rem;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* FAQ Section */
+.faq-section {
+    padding: 100px 2rem;
+    background: #F4F0EB;
+}
+
+.faq-accordion {
+    max-width: 800px;
+    margin: 3rem auto;
+}
+
+.faq-item {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+
+.faq-item.active {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.faq-question {
+    width: 100%;
+    padding: 1.5rem 2rem;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2E4A42;
+    text-align: left;
+    transition: color 0.3s ease;
+}
+
+.faq-question:hover {
+    color: #C3A059;
+}
+
+.faq-icon {
+    font-size: 1.5rem;
+    color: #C3A059;
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-icon {
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 500px;
+    padding: 0 2rem 1.5rem;
+}
+
+.faq-answer p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #555;
+}
+
+.faq-cta {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+/* Footer CTA Section */
+.footer-cta-section {
+    padding: 80px 2rem;
+    background: #E8E0D5;
+    text-align: center;
+}
+
+.footer-cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.footer-cta-text {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: #2E4A42;
+    margin-bottom: 2rem;
+}
+
+/* Sticky Assessment CTA */
+.sticky-assessment-cta {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    z-index: 900;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+.sticky-assessment-cta.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.sticky-cta-button {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #C3A059;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 500;
+    box-shadow: 0 4px 20px rgba(195, 160, 89, 0.4);
+    transition: all 0.3s ease;
+}
+
+.sticky-cta-button:hover {
+    background: #a68745;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(195, 160, 89, 0.5);
+}
+
+.sticky-cta-arrow {
+    font-size: 1.2rem;
+}
+
+/* Sample Result Modal */
+.sample-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.sample-modal.active {
+    display: flex;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    position: relative;
+    background: white;
+    border-radius: 16px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+    color: #2E4A42;
+}
+
+.modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #2E4A42;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.modal-body {
+    margin-bottom: 2rem;
+}
+
+.sample-result-preview {
+    text-align: center;
+}
+
+.sample-band {
+    margin-bottom: 2rem;
+}
+
+.sample-emoji {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.sample-band h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: #8B9D93;
+    margin-bottom: 0.5rem;
+}
+
+.sample-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    font-style: italic;
+}
+
+.sample-scores {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.sample-score-item {
+    text-align: left;
+}
+
+.score-label {
+    display: block;
+    font-weight: 600;
+    color: #2E4A42;
+    margin-bottom: 0.5rem;
+}
+
+.score-bar {
+    width: 100%;
+    height: 12px;
+    background: rgba(195, 160, 89, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.score-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #C3A059, #D4B36A);
+    border-radius: 10px;
+}
+
+.sample-note {
+    font-size: 0.95rem;
+    color: #888;
+    margin-top: 2rem;
+}
+
+.modal-footer {
+    text-align: center;
+}
+
+/* Responsive Styles for New Page */
+@media (max-width: 768px) {
+    .hero-title-large {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle-light {
+        font-size: 1.1rem;
+    }
+
+    .hero-badge {
+        top: 110px;
+        left: 1rem;
+        font-size: 0.8rem;
+    }
+
+    .i-help-statement {
+        font-size: 1.5rem;
+    }
+
+    .pillars-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .credibility-two-col {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .cta-title {
+        font-size: 2.5rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .cta-buttons .btn {
+        width: 100%;
+    }
+
+    .sticky-assessment-cta {
+        right: 1rem;
+        bottom: 1rem;
+    }
+
+    .sticky-cta-button {
+        padding: 0.875rem 1.25rem;
+        font-size: 0.9rem;
     }
 }

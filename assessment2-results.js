@@ -71,6 +71,11 @@ function displayResults(scores, responses, textResponses, userName = '') {
     // Personalized greeting
     const greeting = userName ? `${userName}, you're ` : 'You\'re ';
 
+    // Calculate percentages for score bars (normalized to 100%)
+    const alignmentPercent = Math.min(100, Math.round((scores.alignment / 450) * 100));
+    const somaticPercent = Math.min(100, Math.round((scores.somatic / 400) * 100));
+    const confidencePercent = Math.min(100, Math.round((scores.confidence / 200) * 100));
+
     // Build results HTML
     const resultsHTML = `
         <div class="decorative-star" style="font-size: 3.5rem;">${bandData.emoji}</div>
@@ -79,9 +84,55 @@ function displayResults(scores, responses, textResponses, userName = '') {
             ${bandData.title}
         </h1>
 
-        <p style="font-size: 1.15rem; color: #666; margin-bottom: 3rem; font-style: italic;">
+        <p style="font-size: 1.15rem; color: #666; margin-bottom: 2rem; font-style: italic;">
             ${bandData.subtitle}
         </p>
+
+        <!-- Score Bars -->
+        <div style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); margin-bottom: 3rem; text-align: left;">
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #2E4A42; margin-bottom: 1.5rem; text-align: center;">
+                Your Alignment Snapshot
+            </h3>
+
+            <div style="margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem;">
+                    <span style="font-size: 1rem; font-weight: 600; color: #2E4A42;">⚖️ Success Alignment</span>
+                    <span style="font-size: 0.9rem; color: #888;">${alignmentPercent}%</span>
+                </div>
+                <div style="font-size: 0.85rem; color: #666; margin-bottom: 0.5rem; font-style: italic;">
+                    How closely your outer success reflects your inner truth
+                </div>
+                <div style="background: rgba(195, 160, 89, 0.15); height: 8px; border-radius: 10px; overflow: hidden;">
+                    <div style="background: linear-gradient(90deg, #C3A059 0%, #D4B36A 100%); height: 100%; width: ${alignmentPercent}%; border-radius: 10px; transition: width 0.5s ease; box-shadow: 0 0 8px rgba(195, 160, 89, 0.4);"></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem;">
+                    <span style="font-size: 1rem; font-weight: 600; color: #2E4A42;">🫀 Embodied Awareness</span>
+                    <span style="font-size: 0.9rem; color: #888;">${somaticPercent}%</span>
+                </div>
+                <div style="font-size: 0.85rem; color: #666; margin-bottom: 0.5rem; font-style: italic;">
+                    Your capacity to stay connected to your body's intelligence
+                </div>
+                <div style="background: rgba(195, 160, 89, 0.15); height: 8px; border-radius: 10px; overflow: hidden;">
+                    <div style="background: linear-gradient(90deg, #C3A059 0%, #D4B36A 100%); height: 100%; width: ${somaticPercent}%; border-radius: 10px; transition: width 0.5s ease; box-shadow: 0 0 8px rgba(195, 160, 89, 0.4);"></div>
+                </div>
+            </div>
+
+            <div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem;">
+                    <span style="font-size: 1rem; font-weight: 600; color: #2E4A42;">✨ Authentic Confidence</span>
+                    <span style="font-size: 0.9rem; color: #888;">${confidencePercent}%</span>
+                </div>
+                <div style="font-size: 0.85rem; color: #666; margin-bottom: 0.5rem; font-style: italic;">
+                    The ease and self-trust you bring into expression
+                </div>
+                <div style="background: rgba(195, 160, 89, 0.15); height: 8px; border-radius: 10px; overflow: hidden;">
+                    <div style="background: linear-gradient(90deg, #C3A059 0%, #D4B36A 100%); height: 100%; width: ${confidencePercent}%; border-radius: 10px; transition: width 0.5s ease; box-shadow: 0 0 8px rgba(195, 160, 89, 0.4);"></div>
+                </div>
+            </div>
+        </div>
 
         <div style="background: rgba(195, 160, 89, 0.06); padding: 2.5rem; border-radius: 16px; border-left: 3px solid ${bandData.color}; margin-bottom: 3rem; text-align: left;">
             <h2 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #2E4A42; margin-bottom: 1rem;">

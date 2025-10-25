@@ -424,13 +424,13 @@ const headerEffects = {
         
         window.addEventListener('scroll', () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
+
             // Change header appearance on scroll
             if (scrollTop > 100) {
-                this.header.style.background = 'rgba(254, 254, 254, 0.98)';
+                this.header.style.background = '#e8e0d5';
                 this.header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
             } else {
-                this.header.style.background = 'rgba(254, 254, 254, 0.95)';
+                this.header.style.background = '#e8e0d5';
                 this.header.style.boxShadow = 'none';
             }
             
