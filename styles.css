@@ -4613,6 +4613,12 @@ s
     flex-shrink: 0;
 }
 
+.stat-icon .material-symbols-outlined {
+    font-size: 2rem;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    color: #555;
+}
+
 .stat-text {
     font-size: 1rem;
     line-height: 1.7;
@@ -4625,6 +4631,16 @@ s
     color: #888;
     font-style: italic;
     margin-top: 0.25rem;
+}
+
+.stat-source a {
+    color: inherit;
+    text-decoration: underline;
+    transition: opacity 0.3s ease;
+}
+
+.stat-source a:hover {
+    opacity: 0.7;
 }
 
 .stats-footnote {
