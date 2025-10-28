@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Living Skillfully - Life Coaching</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon_io/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="favicon_io/android-chrome-512x512.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Merriweather:wght@700&family=Elegant+Serif&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KXD333XBMQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-KXD333XBMQ');
+    </script>
+</head>
+<body>
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+    
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <a href="#home" class="brand-link">
+                    <img src="logo.png" alt="Living Skillfully Logo" class="brand-logo">
+                    <div class="brand-text-container">
+                        <span class="brand-text">Living</span>
+                        <span class="brand-accent">Skillfully</span>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="nav-menu" id="nav-menu">
+                <a href="#about-me" class="nav-link" data-text="About Me">Me</a>
+                <a href="#life-coaching" class="nav-link" data-text="Life Coaching">Us</a>
+                <a href="#coaching-style" class="nav-link" data-text="My Approach">How</a>
+                <a href="#blog" class="nav-link" data-text="Musings">Musings</a>
+                <a href="#book-session" class="nav-link cta-link" data-text="Book Your Free Call">Book Your Free Call</a>
+            </div>
+            
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="toggle-line"></span>
+                <span class="toggle-line"></span>
+                <span class="toggle-line"></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="decorative-star">✷</div>
+                        <h1 class="hero-title">
+                            <span class="live-skillfully">Live <em>skillfully</em>.</span><br>
+                            <span class="thrive-wholly">Thrive <em>wholly</em>.</span>
+                        </h1>
+                        <p class="hero-tagline">Coaching for success that embraces it all — work, relationships, health, and joy.</p>
+                        
+                        <div class="hero-primary-cta">
+                            <div class="primary-cta-flow">
+                                <div class="flow-line">Ready to explore what's possible?</div>
+                                <div class="flow-line">Book a free 45-minute connection call</div>
+                                <div class="flow-line">to see if we're a good fit to work together.</div>
+                                <div class="hero-cta-section">
+                                    <a href="#book-session" class="btn btn-primary btn-cta-bounce">
+                                        Let's Connect
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="hero-divider">
+                            <span>or</span>
+                        </div>
+                        
+                        <div class="flow-line hook-line"> <strong>Overwhelmed or stuck?</strong> Try this grounding decision kit
+                        </div>
+                        
+                        <div class="hero-lead-magnet">
+                            <div class="lead-magnet-flow">
+                                <div class="flow-line">Caught between ambition and exhaustion? It's easy to spin in cycles of <strong>indecision</strong> and <strong>burnout</strong>.</div>
+                                <br>
+                                <div class="flow-line to-state">The <em>Grounded Decision Kit</em> helps you <strong>step off the treadmill</strong> and reconnect with your <strong>inner compass</strong>.</div>
+                                <div class="hero-cta-section">
+                                    <button id="open-reset-modal" class="btn btn-outline btn-cta-bounce">
+                                        Get Your Free Kit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-visual">
+                        <div class="hero-image">
+                            <img src="hero-image1.jpeg" alt="Life coach portrait" class="hero-photo">
+                        </div>
+                        <p class="hero-description">I help professionals and entrepreneurs thrive at work and in life — with no part left behind.</p>
+                        <div class="hero-actions">
+                            <a href="#book-session" class="btn btn-primary">Book Your Free Call</a>
+                            <button id="secondary-reset-modal" class="btn btn-outline">Try the Reset Kit</button>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="coaching-style" class="coaching-style">
+            <div class="container">
+                <div class="style-content">
+                    <div class="style-text">
+                        <div class="approach-header">
+                            <div class="approach-titles">
+                                <span class="section-eyebrow">My Approach</span>
+                                <h2 class="section-title">How I Hold Space</h2>
+                                <span class="approach-icon">🌿</span>
+                            </div>
+                        </div>
+                        
+                        <div class="approach-content">
+                            <p class="approach-intro">In a world that prioritizes speed and surface-level success, I create space for real transformation — where you don’t have to perform, but can pause, reflect, and connect with what truly drives you. </p>
+                            
+                            <p class="approach-description">My approach combines life coaching, somatic awareness, and neuroscience — leveraging the brain’s capacity for change to move beyond insight into lasting integration.</p>
+                            
+                            <p class="approach-description">We don’t just analyze your goals — we work with your body and nervous system to ensure change is sustainable, not just theoretical.</p>
+                            
+                            <p class="approach-description">This approach is rooted in three complementary pillars:</p>
+                            
+                            <p class="approach-description pillar-text-right">🤝 <strong>Co-Active Coaching</strong> — building awareness and alignment through powerful questions and partnership.</p>
+                            
+                            <p class="approach-description pillar-text-right">🧘 <strong>Mindfulness Practices</strong> — cultivating presence and equanimity to meet challenges as they arise.</p>
+                            
+                            <p class="approach-description pillar-text-right">🧠 <strong>Neuroscience of Change</strong> — applying how the brain rewires to create transformation that lasts</p>
+                            <p class="approach-outcome">The result is clarity and groundedness that strengthens who you are — and empowers how you live, work, and lead.</strong></p>
+                            <p class="approach-invitation">Want a taste of this kind of work? Start with <a href="#" class="reset-kit-link" id="approach-reset-link">the Reset Kit</a>—three gentle practices to help you pause, breathe, and reconnect.</p>
+
+                        </div>
+                    </div>
+                    
+                    <div class="style-visual">
+                        <div class="style-image-container">
+                            <img src="hero-image3.jpeg" alt="Holistic coaching approach" class="style-photo">
+                            <div class="style-accent-shape"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="life-coaching" class="life-coaching">
+            <div class="container">
+                <div class="section-header centered">
+                    <span class="section-eyebrow">Working Together</span>
+                    <h2 class="section-title">Skillfully Together</h2>
+                    <p class="section-subtitle">Our partnership is designed to help you reconnect with your inner wisdom and build the skills to live and lead with intention and authenticity.</p>
+                </div>
+                
+                <div class="workflow-expand-section">
+                    <button class="workflow-expand-toggle" id="workflow-expand-toggle">
+                        <span class="toggle-icon">✷</span>
+                        <span class="toggle-text">See Our 5-Step Process</span>
+                        <span class="toggle-arrow">→</span>
+                    </button>
+                    
+                    <div class="coaching-workflow" id="coaching-workflow" style="display: none;">
+                        <div class="workflow-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-icon">💫</div>
+                                <div class="step-text">
+                                    <h3 class="step-title">Connection Call — Explore the Fit</h3>
+                                    <p class="step-description">We start with a free call to see if we're a good match.</p>
+                                </div>
+                            </div>
+                            <div class="workflow-arrow">↓</div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-icon">🔍</div>
+                                <div class="step-text">
+                                    <h3 class="step-title">Discovery — Build Awareness</h3>
+                                    <p class="step-description">We explore your patterns and experiences to understand what’s shaping your life.</p>
+                                </div>
+                            </div>
+                            <div class="workflow-arrow">↓</div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-icon">✨</div>
+                                <div class="step-text">
+                                    <h3 class="step-title">Visioning — Define What's Possible</h3>
+                                    <p class="step-description">We clarify a vision and direction that feels authentic and motivating to you.</p>
+                                </div>
+                            </div>
+                            <div class="workflow-arrow">↓</div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <div class="step-icon">🌿</div>
+                                <div class="step-text">
+                                    <h3 class="step-title">Integration — Put insights into action</h3>
+                                    <p class="step-description">We turn insight into action and build new, aligned ways of living and working.</p>
+                                </div>
+                            </div>
+                            <div class="workflow-arrow">↓</div>
+                        </div>
+                        
+                        <div class="workflow-step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <div class="step-icon">⟲</div>
+                                <div class="step-text">
+                                    <h3 class="step-title">Reflection — Carry Forward the learning</h3>
+                                    <p class="step-description">We reflect on your growth and identify what to carry forward for lasting impact.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="workflow-details">
+                            <p class="workflow-description">This journey can unfold in a focused 6-session reset or a deeper 12-session transformation. The structure is clear, yet flexible — so the work meets you exactly where you are.</p>
+                            <div class="workflow-cta">
+                                <a href="#book-session" class="btn btn-primary">Book Your Free Call</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about-me" class="about-me">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-eyebrow">About Me</span>
+                    <h2 class="section-title">Why I Do This Work</h2>
+                </div>
+                
+                <div class="about-content">
+                    <div class="about-text">
+                        <div class="text-block">
+                            <p class="lead-text">On the outside, I had a successful career. But inside, I carried stress in my body and restlessness in my heart. My journey into mindfulness and coaching began as a way to ease that discomfort — and it became a deeper path of reconnection. Now, I help others do the same: listening inward, tending to what's been ignored, and creating lives that feel aligned, sustainable, and alive.</p>
+                        </div>
+                        
+                        <div class="about-expand">
+                            <button class="expand-btn" id="about-expand-btn">See More</button>
+                            
+                            <div class="expanded-content" id="expanded-content" style="display: none;">
+                                <div class="text-block">
+                                    <p>On the outside, my career looked successful. But inside, I carried a heaviness I couldn't explain — stress in my body, restlessness in my mind, and an ache that no amount of stretching or discipline could resolve. Chronic back pain and tension followed, and I knew something deeper was calling for attention.</p>
+                                </div>
+                                
+                                <div class="text-block">
+                                    <p>The shift began when I immersed myself in somatic meditation. For the first time, I could see how my mental and emotional patterns lived in my body — irritation, anger, and even depressive thoughts weren't just states of mind, but physical imprints too. Awareness brought insight, but it wasn't enough on its own. Long-held patterns don't dissolve through insight alone.</p>
+                                </div>
+                                
+                                <div class="text-block">
+                                    <p>The real transformation came when I began working with a life coach. Those conversations weren't about venting — they gave me language, clarity, and tools to understand my values and desires in a way that felt embodied and real. I learned how to interrupt old patterns in the moment, speak to myself differently, and shift how I showed up in the world.</p>
+                                </div>
+                                
+                                <div class="text-block">
+                                    <p>I believe that within each of us lies an innate wisdom—a kind of inner compass. When we learn to access and trust it, it guides us toward a life that feels both true and fulfilling. My role as your life coach is to help you reconnect with that compass and build the skills to live in alignment with it. My goal isn't to create dependence—it's to empower you to become your own life coach. To know yourself deeply, to learn how to reparent the parts of you still waiting to be heard, and to live more skillfully, from the inside out.</p>
+                                </div>
+                                
+                                <div class="text-block">
+                                    <p>If you're feeling the pull to reconnect with that compass, <a href="#" class="reset-kit-link" id="about-reset-link">the Reset Kit</a> offers a gentle place to begin—no big commitments, just quiet tools for finding your footing again.</p>
+                                </div>
+                                
+                                <div class="text-block">
+                                    <p>Curious about how we can work together? <a href="#book-session" class="about-link">Let's start with a connection call</a>.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <blockquote class="about-quote">
+                            "To live skillfully is to recognize how all parts of our life connect. When one part heals, the rest expands."
+                        </blockquote>
+                    </div>
+                    
+                    <div class="about-visual">
+                        <div class="about-image-container">
+                            <img src="hero-image2.jpeg" alt="Your guide - life coach" class="about-photo">
+                            <div class="visual-accent"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="book-session" class="book-session">
+            <div class="container">
+                <div class="booking-content">
+                    <div class="booking-text">
+                        <span class="section-eyebrow">Free Connection Session</span>
+                        <h2 class="section-title">Book Your Free 45-Minute Connection Call</h2>
+                        <p class="booking-description">In this session, we'll explore your goals, talk through what you're navigating right now, and see if we're the right fit to work together.</p>
+                        
+                        <div class="session-details">
+                            <div class="detail-item">
+                                <span class="detail-icon">✅</span>
+                                <span class="detail-text">45 minutes via Zoom</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-icon">✅</span>
+                                <span class="detail-text">Space to explore your goals and challenges</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-icon">✅</span>
+                                <span class="detail-text">No cost. No pressure. Just clarity.</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stay-connected-option">
+                            <div class="booking-option">
+                                <div class="option-content">
+                                    <h4 class="option-title">Stay Connected</h4>
+                                    <p class="option-description">Not ready to book yet? Join my community for tools, reflections, and updates.</p>
+                                    <a href="#contact" class="btn btn-outline">Join My Community</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="booking-form-section">
+                        <button class="booking-form-toggle" id="booking-form-toggle">
+                            <span class="toggle-icon">✷</span>
+                            <span class="toggle-text">Apply for Your Free Connection Session</span>
+                            <span class="toggle-arrow">→</span>
+                        </button>
+                        
+                        <div class="booking-form-container" id="booking-form-container" style="display: none;">
+                            <form class="booking-form" action="https://formspree.io/f/mgvylore" method="POST" id="booking-form-test">
+                            <h3>Apply for your free Connection Session</h3>
+                            <div class="form-group">
+                                <input type="text" name="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" placeholder="Email Address" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">What brings you to coaching right now?</label>
+                                <textarea name="drawing_to_coaching" placeholder="Share what's bringing you to this point..." rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">What would you like to explore or change?</label>
+                                <textarea name="hope_to_explore" placeholder="What are you hoping to work on or change..." rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Have you worked with a coach or therapist before? If so, what helped (or didn't)?</label>
+                                <textarea name="previous_experience" placeholder="Share your experience or write 'No' if this is your first time..." rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">What's one area of your life you feel ready to shift?</label>
+                                <textarea name="area_for_change" placeholder="Describe the area where you feel ready for shift..." rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Why are you drawn to working with me?</label>
+                                <textarea name="why_me" placeholder="What drew you to my approach or website..." rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Are you ready to commit time and energy to this kind of work?</label>
+                                <select name="commitment_readiness" required>
+                                    <option value="">Select your readiness level...</option>
+                                    <option value="Yes, absolutely">Yes, absolutely</option>
+                                    <option value="I'm curious but unsure">I'm curious but unsure</option>
+                                    <option value="Not at the moment">Not at the moment</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Anything else you'd like me to know? (Optional)</label>
+                                <textarea name="additional_info" placeholder="Anything else you'd like to share..." rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary full-width">Apply for Your Free Connection Session</button>
+                            <p class="form-reassurance">You'll hear back from me within 48 hours to confirm your session.</p>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<!--         <section id="pricing" class="pricing">
+            <div class="container">
+                <div class="section-header centered">
+                    <span class="section-eyebrow">Investment</span>
+                    <h2 class="section-title">Coaching Investment</h2>
+                    <p class="section-subtitle">My sessions are typically about an hour long. After your application to work together, we will have a free connection call and we can discuss the packages further on that call.</p>
+                </div>
+                
+                <div class="pricing-grid">
+                    <div class="pricing-card featured">
+                        <div class="pricing-badge">Popular</div>
+                        <div class="pricing-header">
+                            <h3 class="pricing-title">6-Session Package</h3>
+                            <p class="pricing-subtitle">Deeper work with package savings</p>
+                        </div>
+                        <div class="pricing-amount">
+                            <span class="currency">$</span>
+                            <span class="price">855</span>
+                            <span class="period">total package</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>6 sessions (60 min each)</li>
+                            <li>5% discount on single session rate</li>
+                            <li>Payment plans available</li>
+                        </ul>
+                        <div class="pricing-note-card">Details discussed during connection call</div>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3 class="pricing-title">12-Session Package</h3>
+                            <p class="pricing-subtitle">Extended journey with maximum savings</p>
+                        </div>
+                        <div class="pricing-amount">
+                            <span class="currency">$</span>
+                            <span class="price">1620</span>
+                            <span class="period">total package</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>12 sessions (60 min each)</li>
+                            <li>10% discount on single session rate</li>
+                            <li>Payment plans available</li>
+                        </ul>
+                        <div class="pricing-note-card">Details discussed during connection call</div>
+                    </div>
+                </div>
+                
+                <div class="pricing-footer">
+                    <div class="pricing-discount-note">
+                        <p>I occasionally offer flexible pricing for people in transition or unique situations. If we’re a good fit to work together, we can explore packages or payment plans during our connection call.</p>
+                    </div>
+                    <div class="pricing-cta">
+                        <a href="#book-session" class="btn btn-primary">Book Your Free Call</a>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <!-- Coaching invitation section temporarily hidden -->
+        <!--
+        <section class="coaching-invitation">
+            <div class="container">
+                <div class="invitation-content">
+                    <div class="invitation-text">
+                        <h2 class="invitation-title">Ready to go deeper?</h2>
+                        <p class="invitation-description">Explore 1:1 coaching packages designed to help you grow without burning out. Create sustainable success that feels true to who you are.</p>
+                        <div class="invitation-cta">
+                            <a href="coaching.html" class="btn btn-primary">View Coaching Packages</a>
+                        </div>
+                    </div>
+                    <div class="invitation-visual">
+                        <div class="invitation-accent">✷</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        -->
+
+        <section id="testimonials" class="testimonials">
+            <div class="container">
+                <div class="section-header centered">
+                    <span class="section-eyebrow">Client Voices</span>
+                    <h2 class="section-title">What People Are Saying</h2>
+                    <p class="section-subtitle">Hear from those who have experienced the journey of living more skillfully.</p>
+                </div>
+                
+                <div class="testimonial-carousel">
+                    <div class="carousel-container">
+                        <div class="carousel-track">
+                            <!-- Testimonial 1 -->
+                            <div class="testimonial-card">
+                                <div class="testimonial-content">
+                                    <div class="stars">
+                                        <span>★★★★★</span>
+                                    </div>
+                                    <p class="testimonial-text">
+                                        "As I navigated the complex dynamics of career progression, I turned to coaching to better understand my strengths, challenges, and how to leverage them to move forward. Through our sessions, I connected more deeply with my values and purpose, which gave me a new perspective on approaching my career goals with fulfillment rather than pressure. You also encouraged me to expand my vision beyond just my career and to consider the importance of social connections. As a result, I’ve rekindled friendships and become more present with family — an outcome I didn’t expect but deeply value. Throughout the journey, you were always ready to listen, easy to talk to, and guided with compassion and care. Your ability to create space for honest reflection has been transformative."
+                                    </p>    
+                                    <div class="testimonial-author">
+                                        <h4 class="author-name">Anonymous Client</h4>
+                                        <p class="author-role">Tech Industry, Bay Area</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Testimonial 2 -->
+                            <div class="testimonial-card">
+                                <div class="testimonial-content">
+                                    <div class="stars">
+                                        <span>★★★★★</span>
+                                    </div>
+                                    <p class="testimonial-text">
+                                        "Working with Kemi as my coach has been such a grounding and clarifying experience! 
+                                        I entered a new workplace and was looking for guidance to adapt and grow. 
+                                        I came across Kemi’s profile online and decided to give it a try, and I’m so glad I did. 
+                                        Her thoughtful, compassionate coaching helped me reflect more deeply and move forward with clarity and confidence. 
+                                        She always asked the right questions - never pushy, just the kind that made me pause and think. 
+                                        Her calm presence and intuitive style made it easy to open up, and I always left our sessions feeling more centered and empowered. 
+                                        Highly recommend Kemi as a coach!"
+                                    </p>
+                                    <div class="testimonial-author">
+                                        <h4 class="author-name">Anonymous Client</h4>
+                                        <p class="author-role">Early-Career, Bay Area</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Testimonial 3 -->
+                            <div class="testimonial-card">
+                                <div class="testimonial-content">
+                                    <div class="stars">
+                                        <span>★★★★★</span>
+                                    </div>
+                                    <p class="testimonial-text">
+                                        "Kemi provides a supportive dynamic and holistic approach to coaching. She is there to listen and asks the right questions to help you self-navigate. 
+                                        I appreciated her unique exercises that may have seemed silly at first but help you view things from different perspectives."
+                                    </p>
+                                    <div class="testimonial-author">
+                                        <h4 class="author-name">Anonymous Client</h4>
+                                        <p class="author-role">Coaching Client</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Arrows -->
+                    <button class="carousel-nav prev-btn" aria-label="Previous testimonial">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="carousel-nav next-btn" aria-label="Next testimonial">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+
+                    <!-- Pagination Dots -->
+                    <div class="carousel-dots">
+                        <button class="dot active" data-slide="0"></button>
+                        <button class="dot" data-slide="1"></button>
+                        <button class="dot" data-slide="2"></button>
+                    </div>
+                </div>
+                
+                <div class="testimonials-footer">
+                    <p class="testimonials-note">Each coaching journey is deeply personal. These reflections offer just a glimpse into what's possible when we choose to turn inward, listen deeply, and live more skillfully.</p>
+                    <p class="testimonials-soft-cta">Ready to take the first step? <a href="#" class="reset-kit-link" id="testimonials-reset-link">Try the Reset Kit</a> and discover what it feels like to pause, breathe, and reconnect with yourself.</p>
+                    <div class="testimonials-cta">
+                        <a href="#book-session" class="btn btn-outline">Start Your Own Journey</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="blog" class="blog">
+            <div class="container">
+                <div class="section-header centered">
+                    <span class="section-eyebrow">Insights</span>
+                    <h2 class="section-title">Reflections & Musings</h2>
+                    <p class="section-subtitle">Thoughtful explorations on living skillfully, authentic growth, and the art of inner work.</p>
+                </div>
+                
+                <div class="blog-grid">
+                    <article class="blog-card featured">
+                        <div class="blog-image">
+                            <img src="Article image/A2-1-blog-image.jpg" alt="Contemplating self-awareness and ego" class="blog-photo">
+                            <div class="blog-category">Self-Awareness</div>
+                        </div>
+                        <div class="blog-content">
+                            <time class="blog-date">October 2025</time>
+                            <h3 class="blog-title">
+                                <a href="oh-my-ego.html" class="blog-link">
+                                    Oh My Ego
+                                </a>
+                            </h3>
+                            <p class="blog-excerpt">
+                                "Millennials... Have we outdone ourselves in this self-awareness thing?" A meditation on awareness, equanimity, and what happens when the ego becomes the one trying to transcend the ego. Exploring how to hold our patterns with tenderness instead of obsession.
+                            </p>
+                            <div class="blog-meta">
+                                <span class="read-time">8min read</span>
+                                <a href="oh-my-ego.html" class="blog-link">Read Article →</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="blog-image-1.jpg" alt="Person overwhelmed by pushing through" class="blog-photo">
+                            <div class="blog-category">Mindfulness</div>
+                        </div>
+                        <div class="blog-content">
+                            <time class="blog-date">July 2025</time>
+                            <h3 class="blog-title">
+                                <a href="the-hidden-cost-of-pushing-through.html" class="blog-link">
+                                    The Hidden Cost of Pushing Through
+                                </a>
+                            </h3>
+                            <p class="blog-excerpt">
+                                We're taught that persistence is a virtue, that pushing through discomfort leads to growth. But what happens when "pushing through" becomes our default response to everything? Exploring the hidden costs of this pattern and the wisdom that emerges when we learn to pause instead.
+                            </p>
+                            <div class="blog-meta">
+                                <span class="read-time">7min read</span>
+                                <a href="the-hidden-cost-of-pushing-through.html" class="blog-link">Read Article →</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                
+                <div class="blog-footer-cta">
+                    <p class="blog-soft-invitation">If these ideas resonate, you might enjoy <a href="#" class="reset-kit-link" id="blog-reset-link">the Reset Kit</a>—practical tools to help you step off the treadmill and find your center again.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <div class="container">
+                <div class="contact-content">
+                    <div class="contact-text">
+                        <span class="section-eyebrow">Connect</span>
+                        <h2 class="section-title">Start Your Conversation with Kemi Odusanya</h2>
+                        <p class="contact-description">Whether you're ready to begin your coaching journey or simply have questions, I'd love to hear from you.</p>
+                        
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <span class="contact-label">Email</span>
+                                <a href="mailto:kemi@livingskillfully.co" class="contact-link">kemi@livingskillfully.co</a>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-label">Instagram</span>
+                                <a href="https://www.instagram.com/living_skillfully/" class="contact-link" target="_blank">Daily Inspiration</a>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-label">LinkedIn</span>
+                                <a href="https://www.linkedin.com/in/olukemi/" class="contact-link" target="_blank">Professional Insights</a>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-label">YouTube</span>
+                                <a href="https://youtube.com/@skillfullivingwkemi" class="contact-link" target="_blank">Guided Meditations & Coaching Tools</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form-container">
+                        <p class="form-comfort-cue">Not sure what to write? Just introduce yourself — that's enough to start.</p>
+                        <form class="contact-form" action="https://formspree.io/f/xpwrrqny" method="POST">
+                            <div class="form-group">
+                                <input type="text" name="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" placeholder="Email Address" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">How can I support you?</label>
+                                <p class="form-helper">(Choose the one that feels closest—even if it's still unfolding.)</p>
+                                <select name="subject">
+                                    <option value="">Select what resonates...</option>
+                                    <option value="Space to slow down">I'm looking for a space to slow down and reconnect with myself</option>
+                                    <option value="Burnt out guidance">I'm feeling burnt out or out of rhythm and need guidance</option>
+                                    <option value="Clarity and direction">I'm craving more clarity or direction in my life</option>
+                                    <option value="Explore coaching">I want to explore coaching and see if we're a good fit</option>
+                                    <option value="Long-term work">I'm interested in working with you long-term</option>
+                                    <option value="Curious but unsure">I'm curious but not quite sure what I need yet</option>
+                                    <option value="Meditations deeper">I've been listening to your meditations and want to go deeper</option>
+                                    <option value="Say hi">I just want to say hi and keep in touch for now</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Choose a reflection question (optional)</label>
+                                <select name="reflection_question" id="reflection-question">
+                                    <option value="">Select a question to reflect on...</option>
+                                    <option value="tender_transition">What feels tender, tangled, or in transition in your life right now?</option>
+                                    <option value="longing">What are you longing to feel more of these days?</option>
+                                    <option value="self_return">How do you currently find your way back to yourself?</option>
+                                    <option value="open_share">Anything else you want to share, ask, or say out loud?</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="reflection-helper" style="display: none;">
+                                <p class="form-helper" id="helper-text"></p>
+                                <textarea name="reflection_response" id="reflection-response" placeholder="Optional" rows="2"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary full-width">Reach Out</button>
+                            <p class="form-reassurance">I personally respond to every message. You'll hear back within 48 hours.</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="brand-text">Living</span>
+                    <span class="brand-accent">Skillfully</span>
+                </div>
+                <p class="footer-tagline">Guiding you toward authentic, intentional living</p>
+                <div class="footer-resource">
+                    <p>New here? Start with <a href="#" class="reset-kit-link" id="footer-reset-link">the free Reset Kit</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Living Skillfully. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Reset Kit Modal -->
+    <div id="reset-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-close" id="close-reset-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-icon">✨</div>
+                <h2 class="modal-title">Step off the treadmill and refocus on what truly matters.</h2>
+                <p class="modal-description">
+                    Download the <strong>Grounded Decision Kit</strong> — a 15-minute guided practice to:
+                </p>
+                <ul class="modal-benefits">
+                    <li>Calm your nervous system</li>
+                    <li>Clear mental clutter</li>
+                    <li>Make grounded decisions with confidence</li>
+                </ul>
+                <div class="ml-embedded" data-form="Ue3tlk"></div>
+                <p class="modal-reassurance">You’ll also receive occasional tools and reflections to help you thrive at work and in life. Unsubscribe anytime.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
