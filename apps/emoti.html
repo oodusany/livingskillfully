@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoti Prototype</title>
+    <!-- React and ReactDOM CDNs -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX transformation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:italic&family=Inter:wght@300;400;500;600&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F4F0EB;
+        }
+
+        .font-serif {
+            font-family: 'Instrument Serif', serif;
+        }
+
+        /* Smooth transitions for screen changes */
+        .fade-enter {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .fade-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 500ms, transform 500ms;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- Theme Constants ---
+        const COLORS = {
+            forest: '#2E4A42',
+            ochre: '#C3A059',
+            ash: '#B6B1A9',
+            rose: '#B28B84',
+            linen: '#F4F0EB',
+            white: '#FFFFFF',
+        };
+
+        // --- Content Library ---
+        const MINDFULNESS_QUOTES = [
+            { text: "Smile, breathe and go slowly.", author: "Thich Nhat Hanh" },
+            { text: "You are the sky. Everything else—it's just the weather.", author: "Pema Chödrön" },
+            { text: "The little things? The little moments? They aren't little.", author: "Jon Kabat-Zinn" },
+            { text: "Wherever you are, be there totally.", author: "Eckhart Tolle" }
+        ];
+
+        const EMOTIONS_DATA = [
+            { 
+                id: 'joy', label: 'Joy', color: '#E8D2A6', 
+                secondary: [
+                    { 
+                        id: 'contentment', label: 'Contentment', 
+                        nuances: [
+                            { id: 'peaceful', label: 'Peaceful', def: 'A state of calm and quiet serenity.' },
+                            { id: 'satisfied', label: 'Satisfied', def: 'Pleasure derived from fulfilled needs.' }
+                        ]
+                    },
+                    { 
+                        id: 'excitement', label: 'Excitement', 
+                        nuances: [
+                            { id: 'energetic', label: 'Energetic', def: 'Feeling a surge of vitality and spirit.' },
+                            { id: 'eager', label: 'Eager', def: 'A keen, expectant desire for what is coming.' }
+                        ]
+                    }
+                ]
+            },
+            { 
+                id: 'sadness', label: 'Sadness', color: '#A3B7C1', 
+                secondary: [
+                    { 
+                        id: 'loneliness', label: 'Loneliness', 
+                        nuances: [
+                            { id: 'isolated', label: 'Isolated', def: 'Feeling physically or emotionally set apart.' },
+                            { id: 'abandoned', label: 'Abandoned', def: 'Feeling left behind or without support.' }
+                        ]
+                    },
+                    { 
+                        id: 'despair', label: 'Despair', 
+                        nuances: [
+                            { id: 'powerless', label: 'Powerless', def: 'Lacking the ability or influence to change things.' },
+                            { id: 'empty', label: 'Empty', def: 'A hollow sensation of lacking inner substance.' }
+                        ]
+                    }
+                ]
+            },
+            { 
+                id: 'anger', label: 'Anger', color: '#D4A5A5', 
+                secondary: [
+                    { 
+                        id: 'frustration', label: 'Frustration', 
+                        nuances: [
+                            { id: 'annoyed', label: 'Annoyed', def: 'Slightly angry; a minor irritation.' },
+                            { id: 'thwarted', label: 'Thwarted', def: 'Anger from being prevented from a goal.' }
+                        ]
+                    },
+                    { 
+                        id: 'resentment', label: 'Resentment', 
+                        nuances: [
+                            { id: 'bitter', label: 'Bitter', def: 'Lingering anger from perceived unfairness.' },
+                            { id: 'indignant', label: 'Indignant', def: 'Anger sparked by perceived injustice.' }
+                        ]
+                    }
+                ]
+            },
+            { 
+                id: 'fear', label: 'Fear', color: '#C9C4B9', 
+                secondary: [
+                    { 
+                        id: 'anxiety', label: 'Anxiety', 
+                        nuances: [
+                            { id: 'worried', label: 'Worried', def: 'Anxious about potential future problems.' },
+                            { id: 'overwhelmed', label: 'Overwhelmed', def: 'Feeling submerged by intensity or volume.' }
+                        ]
+                    },
+                    { 
+                        id: 'threatened', label: 'Threatened', 
+                        nuances: [
+                            { id: 'insecure', label: 'Insecure', def: 'Lacking confidence or feeling unsafe.' },
+                            { id: 'exposed', label: 'Exposed', def: 'Feeling vulnerable to harm or judgment.' }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // Custom Icon Component to handle Lucide in this script
+        const Icon = ({ name, size = 20, className = "" }) => {
+            return <i data-lucide={name} className={className} style={{ width: size, height: size }}></i>;
+        };
+
+        const ScreenWrapper = ({ children, bg = COLORS.linen }) => (
+            <div className="min-h-screen w-full max-w-md mx-auto relative overflow-hidden flex flex-col transition-colors duration-700 shadow-2xl" style={{ backgroundColor: bg }}>
+                {children}
+            </div>
+        );
+
+        const Button = ({ children, onClick, variant = 'primary', className = '' }) => {
+            const styles = {
+                primary: { backgroundColor: COLORS.forest, color: COLORS.linen },
+                secondary: { backgroundColor: 'transparent', border: `1px solid ${COLORS.ash}`, color: COLORS.forest },
+                danger: { backgroundColor: 'transparent', border: `1px solid ${COLORS.rose}`, color: COLORS.rose }
+            };
+
+            return (
+                <button 
+                    onClick={onClick}
+                    className={`px-8 py-4 rounded-full font-medium transition-all active:scale-95 text-center flex items-center justify-center gap-2 ${className}`}
+                    style={styles[variant]}
+                >
+                    {children}
+                </button>
+            );
+        };
+
+        function App() {
+            const [screen, setScreen] = useState('splash');
+            const [randomQuote, setRandomQuote] = useState({ text: '', author: '' });
+            const [name, setName] = useState('');
+            const [frequency, setFrequency] = useState(3);
+            const [selectedCore, setSelectedCore] = useState(null);
+            const [selectedSecondary, setSelectedSecondary] = useState(null);
+            const [selectedNuance, setSelectedNuance] = useState(null);
+            const [activeDef, setActiveDef] = useState(null);
+            const [showAniccaConfirm, setShowAniccaConfirm] = useState(false);
+
+            useEffect(() => {
+                // Initialize Lucide icons whenever screen changes
+                lucide.createIcons();
+            }, [screen, selectedCore, selectedSecondary, activeDef, showAniccaConfirm]);
+
+            useEffect(() => {
+                const quote = MINDFULNESS_QUOTES[Math.floor(Math.random() * MINDFULNESS_QUOTES.length)];
+                setRandomQuote(quote);
+
+                if (screen === 'splash') {
+                    const timer = setTimeout(() => setScreen('welcome'), 2500);
+                    return () => clearTimeout(timer);
+                }
+                if (screen === 'noted') {
+                    const timer = setTimeout(() => setScreen('home'), 2500);
+                    return () => clearTimeout(timer);
+                }
+            }, [screen]);
+
+            const resetLogState = () => {
+                setSelectedCore(null);
+                setSelectedSecondary(null);
+                setSelectedNuance(null);
+            };
+
+            const handleBack = () => {
+                if (selectedNuance) setSelectedNuance(null);
+                else if (selectedSecondary) setSelectedSecondary(null);
+                else if (selectedCore) setSelectedCore(null);
+                else setScreen('home');
+            };
+
+            const renderScreen = () => {
+                switch(screen) {
+                    case 'splash':
+                        return (
+                            <div className="flex-1 flex flex-col items-center justify-center p-8 text-center animate-pulse">
+                                <h1 className="text-5xl font-serif italic mb-2" style={{ color: COLORS.forest }}>Emoti</h1>
+                                <p className="text-xs tracking-[0.4em] uppercase opacity-40 font-light" style={{ color: COLORS.forest }}>A moment to notice</p>
+                            </div>
+                        );
+
+                    case 'welcome':
+                        return (
+                            <div className="flex-1 flex flex-col p-10 relative">
+                                <div className="flex-1 flex flex-col justify-center px-4">
+                                    <div className="max-w-xs mx-auto text-center">
+                                        <h2 className="text-3xl font-serif mb-6 leading-tight italic" style={{ color: COLORS.forest }}>
+                                            "{randomQuote.text}"
+                                        </h2>
+                                        <div className="w-12 h-[1px] bg-forest opacity-20 mx-auto mb-4"></div>
+                                        <p className="text-[10px] uppercase tracking-widest opacity-60" style={{ color: COLORS.forest }}>
+                                            — {randomQuote.author}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="pb-16 flex justify-center">
+                                    <button onClick={() => setScreen('onboarding-name')} className="opacity-30 hover:opacity-100 transition-opacity p-4">
+                                         <Icon name="arrow-right" size={28} />
+                                    </button>
+                                </div>
+                            </div>
+                        );
+
+                    case 'onboarding-name':
+                        return (
+                            <div className="flex-1 flex flex-col p-10">
+                                <div className="flex-1 flex flex-col justify-center">
+                                    <label className="text-[10px] uppercase tracking-[0.2em] mb-4 opacity-40 font-bold" style={{ color: COLORS.forest }}>Onboarding 1/2</label>
+                                    <h2 className="text-3xl font-serif mb-8" style={{ color: COLORS.forest }}>What should we call you?</h2>
+                                    <input 
+                                        type="text" 
+                                        value={name} 
+                                        onChange={(e) => setName(e.target.value)}
+                                        placeholder="Your name" 
+                                        className="bg-transparent border-b border-ash py-4 text-2xl outline-none placeholder:opacity-20 focus:border-forest transition-all"
+                                        style={{ color: COLORS.forest }}
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-4">
+                                    <Button onClick={() => setScreen('onboarding-freq')}>Continue</Button>
+                                    <button onClick={() => setScreen('onboarding-freq')} className="text-[10px] uppercase tracking-widest opacity-40 py-2">Skip</button>
+                                </div>
+                            </div>
+                        );
+
+                    case 'onboarding-freq':
+                        return (
+                            <div className="flex-1 flex flex-col p-10">
+                                <div className="flex-1 flex flex-col justify-center">
+                                    <label className="text-[10px] uppercase tracking-[0.2em] mb-4 opacity-40 font-bold" style={{ color: COLORS.forest }}>Onboarding 2/2</label>
+                                    <h2 className="text-3xl font-serif mb-4" style={{ color: COLORS.forest }}>Frequency of Pause</h2>
+                                    <p className="opacity-60 mb-10 leading-relaxed italic">How many times a day would you like a reminder to notice?</p>
+                                    
+                                    <div className="flex justify-between items-center bg-white/40 p-2 rounded-full mb-6">
+                                        {[1, 3, 5, 8].map((num) => (
+                                            <button 
+                                                key={num}
+                                                onClick={() => setFrequency(num)}
+                                                className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${frequency === num ? 'bg-forest text-white shadow-lg scale-110' : 'text-forest opacity-40'}`}
+                                                style={frequency === num ? { backgroundColor: COLORS.forest } : {}}
+                                            >
+                                                {num}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <p className="text-center text-[10px] uppercase tracking-tighter opacity-30">The bell will chime at random moments.</p>
+                                </div>
+                                <Button onClick={() => setScreen('home')}>Begin Practice</Button>
+                            </div>
+                        );
+
+                    case 'home':
+                        return (
+                            <div className="flex-1 flex flex-col p-8 overflow-y-auto">
+                                <div className="flex justify-between items-start mb-10">
+                                    <div>
+                                        <h3 className="text-[10px] opacity-40 uppercase tracking-[0.2em] mb-1">{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}</h3>
+                                        <h2 className="text-3xl font-serif text-forest">Welcome, {name || 'friend'}</h2>
+                                    </div>
+                                    <button onClick={() => setScreen('settings')} className="p-2 opacity-40"><Icon name="settings" size={20}/></button>
+                                </div>
+                                
+                                <div className="flex-1 flex flex-col items-center justify-center text-center mb-12">
+                                    <div className="w-48 h-48 rounded-full border border-ash/30 flex items-center justify-center relative mb-8">
+                                        <div className="absolute inset-0 rounded-full animate-ping opacity-10 bg-forest scale-75"></div>
+                                        <div className="w-40 h-40 rounded-full bg-white/40 flex items-center justify-center p-6">
+                                             <p className="text-sm italic opacity-60 leading-relaxed">
+                                                 Ready to notice?<br/>
+                                                 <span className="text-[10px] uppercase tracking-widest opacity-40">or wait for next bell</span>
+                                             </p>
+                                        </div>
+                                    </div>
+                                    <Button onClick={() => { resetLogState(); setScreen('log'); }} variant="secondary">Check-in Now</Button>
+                                </div>
+
+                                <button 
+                                    onClick={() => setScreen('month-summary')}
+                                    className="w-full bg-white/50 rounded-[2.5rem] p-6 mb-4 text-left active:scale-[0.98] transition-transform flex items-center justify-between group"
+                                >
+                                    <div className="flex-1">
+                                        <div className="flex items-center gap-2 mb-4">
+                                            <Icon name="calendar" size={14} className="opacity-40" />
+                                            <h4 className="text-[10px] uppercase tracking-[0.2em] opacity-40 font-bold">Month Summary</h4>
+                                        </div>
+                                        <div className="flex items-end gap-4">
+                                            <div>
+                                                <div className="text-4xl font-serif text-forest">12</div>
+                                                <div className="text-[10px] uppercase tracking-widest opacity-40">Observations</div>
+                                            </div>
+                                            <div className="pb-1">
+                                                <div className="px-3 py-1 bg-ochre/10 text-ochre text-[10px] rounded-full uppercase tracking-widest font-bold">Details</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <Icon name="chevron-right" className="opacity-20 group-hover:translate-x-1 transition-all" />
+                                </button>
+                            </div>
+                        );
+
+                    case 'month-summary':
+                        return (
+                            <div className="flex-1 flex flex-col p-8 overflow-y-auto">
+                                <div className="flex justify-between items-center mb-10 shrink-0">
+                                    <button onClick={() => setScreen('home')} className="p-2 -ml-2"><Icon name="arrow-left" size={20}/></button>
+                                    <h3 className="font-serif italic text-xl">Awareness Map</h3>
+                                    <div className="w-9" />
+                                </div>
+
+                                <div className="space-y-8">
+                                    <section>
+                                        <div className="flex items-center justify-between mb-4">
+                                            <h4 className="text-[10px] uppercase tracking-[0.2em] opacity-40 font-bold">Current Rhythm</h4>
+                                            <span className="text-[10px] uppercase tracking-widest opacity-30 font-bold">{new Date().toLocaleDateString('en-US', { month: 'long' })}</span>
+                                        </div>
+                                        <div className="grid grid-cols-7 gap-2">
+                                            {[...Array(31)].map((_, i) => (
+                                                <div 
+                                                    key={i} 
+                                                    className={`aspect-square rounded-md transition-colors ${i % 4 === 0 ? 'bg-forest/40' : i % 7 === 0 ? 'bg-ochre/30' : 'bg-ash/10'}`}
+                                                ></div>
+                                            ))}
+                                        </div>
+                                    </section>
+
+                                    <section className="bg-white/40 p-6 rounded-[2.5rem]">
+                                        <h4 className="text-[10px] uppercase tracking-[0.2em] opacity-40 font-bold mb-6">Top Sensations</h4>
+                                        <div className="space-y-4">
+                                            {[
+                                                { label: 'Contentment', count: 5, color: COLORS.ochre },
+                                                { label: 'Peaceful', count: 4, color: COLORS.forest },
+                                                { label: 'Anxiety', count: 2, color: COLORS.ash },
+                                                { label: 'Satisfied', count: 1, color: COLORS.rose },
+                                            ].map((item) => (
+                                                <div key={item.label}>
+                                                    <div className="flex justify-between text-xs mb-1.5 font-medium italic">
+                                                        <span>{item.label}</span>
+                                                        <span className="opacity-40">{item.count}x</span>
+                                                    </div>
+                                                    <div className="h-1.5 w-full bg-ash/10 rounded-full overflow-hidden">
+                                                        <div className="h-full rounded-full" style={{ width: `${(item.count/5)*100}%`, backgroundColor: item.color }}></div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </section>
+
+                                    <div className="p-8 bg-forest text-linen rounded-[2.5rem] flex flex-col items-center text-center">
+                                        <Icon name="book-open" size={24} className="mb-4 opacity-40" />
+                                        <p className="text-base italic opacity-80 leading-relaxed mb-4">"Awareness is the first step in healing."</p>
+                                        <div className="w-8 h-[1px] bg-white opacity-20"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+
+                    case 'log':
+                        const coreObj = EMOTIONS_DATA.find(e => e.id === selectedCore);
+                        const secondaryObj = coreObj?.secondary.find(s => s.id === selectedSecondary);
+
+                        return (
+                            <div className="flex-1 flex flex-col p-6 relative">
+                                <div className="flex justify-between items-center mb-6 shrink-0">
+                                    <button onClick={handleBack} className="p-2"><Icon name="arrow-left" size={20} /></button>
+                                    <h3 className="font-serif italic text-lg text-forest">Presence</h3>
+                                    <div className="w-9" />
+                                </div>
+
+                                <div className="flex gap-2 justify-center mb-10">
+                                    <div className={`h-1 w-8 rounded-full transition-all duration-300 ${selectedCore ? 'bg-forest opacity-100' : 'bg-forest opacity-20'}`}></div>
+                                    <div className={`h-1 w-8 rounded-full transition-all duration-300 ${selectedSecondary ? 'bg-forest opacity-100' : 'bg-forest opacity-20'}`}></div>
+                                    <div className={`h-1 w-8 rounded-full transition-all duration-300 ${selectedNuance ? 'bg-forest opacity-100' : 'bg-forest opacity-20'}`}></div>
+                                </div>
+
+                                <div className="text-center mb-8 shrink-0">
+                                    <h2 className="text-2xl font-serif mb-2 text-forest">
+                                        {!selectedCore ? "The Root Sensation" : 
+                                         !selectedSecondary ? `In what way ${coreObj.label}?` : 
+                                         `Finding the Nuance`}
+                                    </h2>
+                                    <p className="text-sm opacity-50 italic">
+                                        {!selectedCore ? "Choose the primary emotion." : 
+                                         !selectedSecondary ? "Define the secondary layer." : 
+                                         "Touch the deepest naming."}
+                                    </p>
+                                </div>
+
+                                <div className="flex-1 flex items-center justify-center">
+                                    {!selectedCore && (
+                                        <div className="relative w-72 h-72 sm:w-80 sm:h-80">
+                                            <svg viewBox="0 0 100 100" className="w-full h-full transform -rotate-90">
+                                                {EMOTIONS_DATA.map((emo, index) => {
+                                                    const startAngle = index * 90;
+                                                    const endAngle = (index + 1) * 90;
+                                                    const x1 = 50 + 50 * Math.cos((Math.PI * startAngle) / 180);
+                                                    const y1 = 50 + 50 * Math.sin((Math.PI * startAngle) / 180);
+                                                    const x2 = 50 + 50 * Math.cos((Math.PI * endAngle) / 180);
+                                                    const y2 = 50 + 50 * Math.sin((Math.PI * endAngle) / 180);
+                                                    return (
+                                                        <path
+                                                            key={emo.id}
+                                                            d={`M 50 50 L ${x1} ${y1} A 50 50 0 0 1 ${x2} ${y2} Z`}
+                                                            fill={emo.color}
+                                                            fillOpacity="0.7"
+                                                            stroke="white"
+                                                            strokeWidth="0.5"
+                                                            className="cursor-pointer transition-all hover:fill-opacity-100"
+                                                            onClick={() => setSelectedCore(emo.id)}
+                                                        />
+                                                    );
+                                                })}
+                                            </svg>
+                                            {EMOTIONS_DATA.map((emo, index) => {
+                                                const angle = (index * 90) + 45 - 90;
+                                                const r = 32;
+                                                const x = 50 + r * Math.cos((Math.PI * angle) / 180);
+                                                const y = 50 + r * Math.sin((Math.PI * angle) / 180);
+                                                return (
+                                                    <div key={emo.id} className="absolute pointer-events-none text-xs font-bold uppercase tracking-widest" style={{ left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -50%)', color: COLORS.forest }}>
+                                                        {emo.label}
+                                                    </div>
+                                                );
+                                            })}
+                                            <div className="absolute inset-0 m-auto w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-inner">
+                                                <div className="w-1.5 h-1.5 bg-ash opacity-40 rounded-full animate-pulse"></div>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {selectedCore && !selectedSecondary && (
+                                        <div className="w-full grid grid-cols-1 gap-4 px-4">
+                                            {coreObj.secondary.map(sec => (
+                                                <button 
+                                                    key={sec.id}
+                                                    onClick={() => setSelectedSecondary(sec.id)}
+                                                    className="p-8 bg-white/70 rounded-3xl text-center text-xl font-serif italic border border-ash/10 hover:bg-white transition-all shadow-sm"
+                                                    style={{ color: COLORS.forest }}
+                                                >
+                                                    {sec.label}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    {selectedSecondary && (
+                                        <div className="w-full space-y-3 px-4">
+                                            {secondaryObj.nuances.map(nuance => (
+                                                <div 
+                                                    key={nuance.id}
+                                                    className={`flex items-center gap-2 p-5 rounded-2xl transition-all cursor-pointer ${selectedNuance === nuance.id ? 'bg-forest text-white shadow-lg' : 'bg-white/70'}`}
+                                                    onClick={() => setSelectedNuance(nuance.id)}
+                                                >
+                                                    <div className="flex-1 font-medium italic">{nuance.label}</div>
+                                                    <button 
+                                                        onClick={(e) => { e.stopPropagation(); setActiveDef(nuance); }}
+                                                        className="p-2 opacity-40 hover:opacity-100 transition-opacity"
+                                                    >
+                                                        <Icon name="info" size={18} />
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="mt-8 shrink-0 pb-4 px-4">
+                                    <Button 
+                                        className={`w-full transition-all duration-300 ${!selectedNuance ? 'opacity-20 pointer-events-none' : ''}`}
+                                        onClick={() => setScreen('noted')}
+                                    >
+                                        Log Sensation
+                                    </Button>
+                                </div>
+
+                                {activeDef && (
+                                    <div className="absolute inset-0 bg-black/20 backdrop-blur-sm z-50 flex flex-col justify-end p-4">
+                                        <div className="bg-linen p-8 rounded-[2.5rem] shadow-2xl relative">
+                                            <button onClick={() => setActiveDef(null)} className="absolute top-6 right-6 opacity-30 p-2"><Icon name="x" size={20}/></button>
+                                            <h4 className="text-3xl font-serif mb-4 text-forest italic">{activeDef.label}</h4>
+                                            <p className="text-lg opacity-80 leading-relaxed italic">{activeDef.def}</p>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        );
+
+                    case 'noted':
+                        return (
+                            <div className="flex-1 flex flex-col items-center justify-center p-12 text-center">
+                                <Icon name="check-circle-2" size={64} className="mb-6 opacity-20 text-forest" />
+                                <h2 className="text-4xl font-serif italic mb-4 text-forest">Noted.</h2>
+                                <p className="opacity-60 text-sm tracking-widest uppercase">The sensation is seen.</p>
+                            </div>
+                        );
+
+                    case 'settings':
+                        return (
+                            <div className="flex-1 flex flex-col p-6">
+                                 <div className="flex justify-between items-center mb-8 shrink-0">
+                                    <button onClick={() => setScreen('home')} className="p-2 -ml-2"><Icon name="x" size={24}/></button>
+                                    <h3 className="font-serif italic text-xl">Settings</h3>
+                                    <div className="w-10" />
+                                </div>
+                                <div className="space-y-4">
+                                    <div className="p-6 bg-white/50 rounded-3xl flex justify-between items-center">
+                                        <span className="opacity-60 text-sm font-bold tracking-widest uppercase">Daily Reminders</span>
+                                        <span className="text-2xl font-serif text-forest">{frequency}</span>
+                                    </div>
+                                    <button 
+                                        onClick={() => setShowAniccaConfirm(true)}
+                                        className="w-full p-6 bg-rose/10 text-rose rounded-3xl flex items-center justify-between transition-colors hover:bg-rose/20"
+                                    >
+                                        <span className="font-bold text-sm tracking-widest uppercase">Clear Records</span>
+                                        <Icon name="wind" size={20} />
+                                    </button>
+                                </div>
+                                {showAniccaConfirm && (
+                                    <div className="absolute inset-0 bg-linen/95 backdrop-blur-md z-50 p-10 flex flex-col justify-center text-center">
+                                         <Icon name="wind" size={48} className="mx-auto mb-6 text-rose opacity-40" />
+                                         <h4 className="text-2xl font-serif mb-4">Letting go?</h4>
+                                         <p className="opacity-60 mb-8 text-sm italic">This practice will permanently clear your awareness record from this device.</p>
+                                         <div className="flex flex-col gap-3">
+                                                <Button variant="danger" onClick={() => { setScreen('home'); setShowAniccaConfirm(false); }}>Confirm</Button>
+                                                <button onClick={() => setShowAniccaConfirm(false)} className="text-[10px] uppercase tracking-widest opacity-40 py-2">Cancel</button>
+                                         </div>
+                                    </div>
+                                )}
+                            </div>
+                        );
+
+                    default: return null;
+                }
+            };
+
+            return (
+                <ScreenWrapper>
+                    {renderScreen()}
+                </ScreenWrapper>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
