@@ -1,0 +1,56 @@
+{
+  "expo": {
+    "name": "Emoti",
+    "slug": "emoti-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#2E4A42"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "co.livingskillfully.emoti",
+      "infoPlist": {
+        "UIBackgroundModes": ["remote-notification"]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#2E4A42"
+      },
+      "package": "co.livingskillfully.emoti",
+      "permissions": [
+        "RECEIVE_BOOT_COMPLETED",
+        "VIBRATE",
+        "USE_EXACT_ALARM",
+        "SCHEDULE_EXACT_ALARM"
+      ],
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "notification": {
+      "icon": "./assets/icon.png",
+      "color": "#2E4A42",
+      "androidMode": "default",
+      "androidCollapsedTitle": "Emoti"
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#2E4A42",
+          "sounds": ["default"]
+        }
+      ]
+    ]
+  }
+}
