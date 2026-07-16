@@ -55,12 +55,18 @@ export const getTopEmotions = (logs, limit = 5) => {
   const emotionCounts = {};
 
   logs.forEach((log) => {
-    const emotion = log.nuancedEmotionLabel || log.secondaryEmotionLabel || log.coreEmotionLabel;
-    if (emotion) {
-      if (emotionCounts[emotion]) {
-        emotionCounts[emotion] += 1;
-      } else {
-        emotionCounts[emotion] = 1;
+    if (log.emotions && Array.isArray(log.emotions)) {
+      // New multi-emotion format: count each word in the emotions array
+      log.emotions.forEach((e) => {
+        if (e.word) {
+          emotionCounts[e.word] = (emotionCounts[e.word] || 0) + 1;
+        }
+      });
+    } else {
+      // Legacy single-emotion format
+      const emotion = log.nuancedEmotionLabel || log.secondaryEmotionLabel || log.coreEmotionLabel;
+      if (emotion) {
+        emotionCounts[emotion] = (emotionCounts[emotion] || 0) + 1;
       }
     }
   });

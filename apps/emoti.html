@@ -3,588 +3,468 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emoti Prototype</title>
-    <!-- React and ReactDOM CDNs -->
+    <title>Emoti</title>
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <!-- Babel for JSX transformation -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <!-- Tailwind CSS for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons CDN -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:italic&family=Inter:wght@300;400;500;600&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #F4F0EB;
+        *, *::before, *::after { box-sizing: border-box; }
+
+        html, body {
+            margin: 0; padding: 0; height: 100%;
+            font-family: 'DM Sans', sans-serif;
+            background: #2E4A42;
         }
 
-        .font-serif {
-            font-family: 'Instrument Serif', serif;
+        #root {
+            height: 100%;
+            display: flex;
+            justify-content: center;
         }
 
-        /* Smooth transitions for screen changes */
-        .fade-enter {
-            opacity: 0;
-            transform: translateY(10px);
+        .serif { font-family: 'Cormorant Garamond', serif; }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%; height: 4px;
+            border-radius: 2px; outline: none; cursor: pointer;
         }
-        .fade-enter-active {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 500ms, transform 500ms;
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px; height: 22px; border-radius: 50%;
+            background: var(--thumb, #fff);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 22px; height: 22px; border-radius: 50%;
+            background: var(--thumb, #fff); border: none;
+            cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.25);
         }
     </style>
 </head>
 <body>
-    <div id="root"></div>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect } = React;
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
+// ── Constants ────────────────────────────────────────────────────────────────
+const FOREST = '#2E4A42';
+const OCHRE  = '#C3A059';
+const ASH    = '#B6B1A9';
+const ROSE   = '#B28B84';
+const LINEN  = '#F4F0EB';
+const WHITE  = '#FFFFFF';
 
-        // --- Theme Constants ---
-        const COLORS = {
-            forest: '#2E4A42',
-            ochre: '#C3A059',
-            ash: '#B6B1A9',
-            rose: '#B28B84',
-            linen: '#F4F0EB',
-            white: '#FFFFFF',
-        };
+const CAT_COLORS = {
+    mad:      { muted: '#F5C6C2', vibrant: '#8B1A10', bubble: '#D94F3D' },
+    sad:      { muted: '#C5D8E8', vibrant: '#1A3D5C', bubble: '#4A80B0' },
+    scared:   { muted: '#D8C8E8', vibrant: '#4A1D6B', bubble: '#8A5BB5' },
+    joyful:   { muted: '#FAE8A8', vibrant: '#7A5800', bubble: '#D4A30A' },
+    powerful: { muted: '#FAD8B0', vibrant: '#7A2800', bubble: '#D4732A' },
+    peaceful: { muted: '#B8E0D0', vibrant: '#1A5232', bubble: '#3A9E72' },
+    bad:      { muted: '#D8D5D0', vibrant: '#3D3530', bubble: '#7A7470' },
+};
 
-        // --- Content Library ---
-        const MINDFULNESS_QUOTES = [
-            { text: "Smile, breathe and go slowly.", author: "Thich Nhat Hanh" },
-            { text: "You are the sky. Everything else—it's just the weather.", author: "Pema Chödrön" },
-            { text: "The little things? The little moments? They aren't little.", author: "Jon Kabat-Zinn" },
-            { text: "Wherever you are, be there totally.", author: "Eckhart Tolle" }
-        ];
+const EMOTIONS = [
+    { id: 'mad',      label: 'Mad',      levels: { low: ['Skeptical','Annoyed','Irritated'],   mid: ['Angry','Frustrated','Resentful'],      high: ['Furious','Livid','Enraged']             }},
+    { id: 'sad',      label: 'Sad',      levels: { low: ['Pensive','Disappointed','Bored'],    mid: ['Sad','Lonely','Hurt'],                  high: ['Devastated','Heartbroken','Agonized']   }},
+    { id: 'scared',   label: 'Scared',   levels: { low: ['Uneasy','Nervous','Worried'],        mid: ['Afraid','Anxious','Threatened'],        high: ['Terrified','Panicked','Overwhelmed']    }},
+    { id: 'joyful',   label: 'Joyful',   levels: { low: ['Content','Amused','Satisfied'],      mid: ['Happy','Cheerful','Proud'],             high: ['Ecstatic','Jubilant','Euphoric']        }},
+    { id: 'powerful', label: 'Powerful', levels: { low: ['Capable','Valued','Noticed'],        mid: ['Strong','Confident','Important'],       high: ['Invincible','Empowered','Heroic']       }},
+    { id: 'peaceful', label: 'Peaceful', levels: { low: ['Calm','Quiet','Thoughtful'],         mid: ['Serene','Secure','Relaxed'],            high: ['Meditative','Blissful','Harmonious']    }},
+    { id: 'bad',      label: 'Bad',      levels: { low: ['Tired','Stressed','Busy'],           mid: ['Bored','Pressured','Apathetic'],        high: ['Overwhelmed','Out of Control','Depleted']}},
+];
 
-        const EMOTIONS_DATA = [
-            { 
-                id: 'joy', label: 'Joy', color: '#E8D2A6', 
-                secondary: [
-                    { 
-                        id: 'contentment', label: 'Contentment', 
-                        nuances: [
-                            { id: 'peaceful', label: 'Peaceful', def: 'A state of calm and quiet serenity.' },
-                            { id: 'satisfied', label: 'Satisfied', def: 'Pleasure derived from fulfilled needs.' }
-                        ]
-                    },
-                    { 
-                        id: 'excitement', label: 'Excitement', 
-                        nuances: [
-                            { id: 'energetic', label: 'Energetic', def: 'Feeling a surge of vitality and spirit.' },
-                            { id: 'eager', label: 'Eager', def: 'A keen, expectant desire for what is coming.' }
-                        ]
-                    }
-                ]
-            },
-            { 
-                id: 'sadness', label: 'Sadness', color: '#A3B7C1', 
-                secondary: [
-                    { 
-                        id: 'loneliness', label: 'Loneliness', 
-                        nuances: [
-                            { id: 'isolated', label: 'Isolated', def: 'Feeling physically or emotionally set apart.' },
-                            { id: 'abandoned', label: 'Abandoned', def: 'Feeling left behind or without support.' }
-                        ]
-                    },
-                    { 
-                        id: 'despair', label: 'Despair', 
-                        nuances: [
-                            { id: 'powerless', label: 'Powerless', def: 'Lacking the ability or influence to change things.' },
-                            { id: 'empty', label: 'Empty', def: 'A hollow sensation of lacking inner substance.' }
-                        ]
-                    }
-                ]
-            },
-            { 
-                id: 'anger', label: 'Anger', color: '#D4A5A5', 
-                secondary: [
-                    { 
-                        id: 'frustration', label: 'Frustration', 
-                        nuances: [
-                            { id: 'annoyed', label: 'Annoyed', def: 'Slightly angry; a minor irritation.' },
-                            { id: 'thwarted', label: 'Thwarted', def: 'Anger from being prevented from a goal.' }
-                        ]
-                    },
-                    { 
-                        id: 'resentment', label: 'Resentment', 
-                        nuances: [
-                            { id: 'bitter', label: 'Bitter', def: 'Lingering anger from perceived unfairness.' },
-                            { id: 'indignant', label: 'Indignant', def: 'Anger sparked by perceived injustice.' }
-                        ]
-                    }
-                ]
-            },
-            { 
-                id: 'fear', label: 'Fear', color: '#C9C4B9', 
-                secondary: [
-                    { 
-                        id: 'anxiety', label: 'Anxiety', 
-                        nuances: [
-                            { id: 'worried', label: 'Worried', def: 'Anxious about potential future problems.' },
-                            { id: 'overwhelmed', label: 'Overwhelmed', def: 'Feeling submerged by intensity or volume.' }
-                        ]
-                    },
-                    { 
-                        id: 'threatened', label: 'Threatened', 
-                        nuances: [
-                            { id: 'insecure', label: 'Insecure', def: 'Lacking confidence or feeling unsafe.' },
-                            { id: 'exposed', label: 'Exposed', def: 'Feeling vulnerable to harm or judgment.' }
-                        ]
-                    }
-                ]
-            }
-        ];
+const QUOTES = [
+    { text: 'Smile, breathe and go slowly.', author: 'Thich Nhat Hanh' },
+    { text: "You are the sky. Everything else—it's just the weather.", author: 'Pema Chödrön' },
+    { text: "The little things? The little moments? They aren't little.", author: 'Jon Kabat-Zinn' },
+    { text: 'Wherever you are, be there totally.', author: 'Eckhart Tolle' },
+];
 
-        // Custom Icon Component to handle Lucide in this script
-        const Icon = ({ name, size = 20, className = "" }) => {
-            return <i data-lucide={name} className={className} style={{ width: size, height: size }}></i>;
-        };
+// ── Helpers ──────────────────────────────────────────────────────────────────
+const wordFor = (id, intensity) => {
+    const cat = EMOTIONS.find(e => e.id === id);
+    if (!cat) return '';
+    const i = Math.round(intensity);
+    if (i <= 3) return cat.levels.low[i - 1];
+    if (i <= 7) return cat.levels.mid[Math.min(2, Math.floor((i - 4) * 3 / 4))];
+    return cat.levels.high[i - 8];
+};
 
-        const ScreenWrapper = ({ children, bg = COLORS.linen }) => (
-            <div className="min-h-screen w-full max-w-md mx-auto relative overflow-hidden flex flex-col transition-colors duration-700 shadow-2xl" style={{ backgroundColor: bg }}>
-                {children}
+const hexRgb = hex => {
+    const r = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return r ? [parseInt(r[1],16), parseInt(r[2],16), parseInt(r[3],16)] : [0,0,0];
+};
+
+const lerp = (a, b, t) => Math.round(a + (b - a) * t);
+
+const blendColor = (mutedHex, vibrantHex, intensity) => {
+    const t = (intensity - 1) / 9;
+    const [ar,ag,ab] = hexRgb(mutedHex);
+    const [br,bg,bb] = hexRgb(vibrantHex);
+    return `rgb(${lerp(ar,br,t)},${lerp(ag,bg,t)},${lerp(ab,bb,t)})`;
+};
+
+// ── Shared styles ────────────────────────────────────────────────────────────
+const shell = {
+    width: '100%', maxWidth: 430, height: '100%',
+    backgroundColor: LINEN,
+    display: 'flex', flexDirection: 'column',
+    position: 'relative', overflow: 'hidden',
+    boxShadow: '0 0 80px rgba(0,0,0,0.5)',
+};
+
+const iconBtn = (onClick, label, extra = {}) => (
+    <button onClick={onClick} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, fontFamily: 'inherit', ...extra }}>
+        {label}
+    </button>
+);
+
+const primaryBtn = (label, onClick, disabled = false) => (
+    <button
+        onClick={onClick}
+        disabled={disabled}
+        style={{
+            width: '100%', padding: '17px 0', borderRadius: 14, border: 'none',
+            backgroundColor: disabled ? ASH : FOREST,
+            color: WHITE, fontSize: 15, fontWeight: 500,
+            cursor: disabled ? 'not-allowed' : 'pointer',
+            fontFamily: 'inherit', letterSpacing: '0.2px',
+        }}
+    >{label}</button>
+);
+
+// ── IntensityCard ─────────────────────────────────────────────────────────────
+function IntensityCard({ id, intensity, label, onChange }) {
+    const cats      = CAT_COLORS[id];
+    const cardBg    = blendColor(cats.muted, cats.vibrant, intensity);
+    const light     = intensity >= 6;
+    const textClr   = light ? '#fff' : FOREST;
+    const subClr    = light ? 'rgba(255,255,255,0.65)' : 'rgba(46,74,66,0.45)';
+    const trackClr  = light ? 'rgba(255,255,255,0.25)' : 'rgba(46,74,66,0.12)';
+    const thumb     = light ? '#fff' : FOREST;
+    const wordSize  = 22 + (intensity - 1) * 1.6;
+    const wordWt    = intensity <= 3 ? 300 : intensity <= 7 ? 500 : 700;
+    const fillPct   = ((intensity - 1) / 9 * 100).toFixed(1);
+
+    return (
+        <div style={{ backgroundColor: cardBg, borderRadius: 20, padding: '22px 22px 16px', marginBottom: 14, boxShadow: '0 4px 20px rgba(0,0,0,0.12)' }}>
+            <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '1.6px', color: subClr, marginBottom: 6, textTransform: 'uppercase' }}>{label}</div>
+            <div style={{ fontSize: wordSize, fontWeight: wordWt, color: textClr, marginBottom: 20, lineHeight: 1.15, minHeight: 40 }}>
+                {wordFor(id, intensity)}
+            </div>
+            <input
+                type="range" min="1" max="10" step="1"
+                value={intensity}
+                onChange={e => onChange(id, Number(e.target.value))}
+                style={{ background: `linear-gradient(to right,${thumb} ${fillPct}%,${trackClr} ${fillPct}%)`, '--thumb': thumb, marginBottom: 6 }}
+            />
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: subClr, fontWeight: 300 }}>
+                <span>quiet</span>
+                <span style={{ fontWeight: 500 }}>{intensity}</span>
+                <span>loud</span>
+            </div>
+        </div>
+    );
+}
+
+// ── App ───────────────────────────────────────────────────────────────────────
+function App() {
+    const [screen,      setScreen]      = useState('splash');
+    const [quote,       setQuote]       = useState(QUOTES[0]);
+    const [name,        setName]        = useState('');
+    const [frequency,   setFrequency]   = useState(3);
+    const [logPhase,    setLogPhase]    = useState(1);
+    const [selectedIds, setSelectedIds] = useState([]);
+    const [intensities, setIntensities] = useState({});
+
+    useEffect(() => {
+        setQuote(QUOTES[Math.floor(Math.random() * QUOTES.length)]);
+    }, []);
+
+    useEffect(() => {
+        if (screen === 'splash') {
+            const t = setTimeout(() => setScreen('welcome'), 2500);
+            return () => clearTimeout(t);
+        }
+        if (screen === 'noted') {
+            const t = setTimeout(() => setScreen('home'), 2500);
+            return () => clearTimeout(t);
+        }
+    }, [screen]);
+
+    const openLog = () => {
+        setLogPhase(1); setSelectedIds([]); setIntensities({});
+        setScreen('log');
+    };
+
+    const toggleCat = id =>
+        setSelectedIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+
+    const goPhase2 = () => {
+        const init = {};
+        selectedIds.forEach(id => { init[id] = 5; });
+        setIntensities(init);
+        setLogPhase(2);
+    };
+
+    const date = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+    const month = new Date().toLocaleDateString('en-US', { month: 'long' });
+
+    // ── Screens ───────────────────────────────────────────────────────────────
+    if (screen === 'splash') return (
+        <div style={shell}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+                <h1 className="serif" style={{ fontSize: 56, color: FOREST, margin: '0 0 8px', fontStyle: 'italic' }}>Emoti</h1>
+                <p style={{ fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', opacity: 0.35, color: FOREST, margin: 0 }}>A moment to notice</p>
+            </div>
+        </div>
+    );
+
+    if (screen === 'welcome') return (
+        <div style={shell}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '60px 40px 40px' }}>
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ textAlign: 'center', maxWidth: 280 }}>
+                        <h2 className="serif" style={{ fontSize: 26, color: FOREST, lineHeight: 1.45, fontStyle: 'italic', margin: '0 0 20px' }}>"{quote.text}"</h2>
+                        <div style={{ width: 40, height: 1, backgroundColor: FOREST, opacity: 0.2, margin: '0 auto 14px' }} />
+                        <p style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.15em', opacity: 0.5, color: FOREST, margin: 0 }}>— {quote.author}</p>
+                    </div>
+                </div>
+                <div style={{ textAlign: 'center', paddingBottom: 8 }}>
+                    <button onClick={() => setScreen('onboarding-name')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 28, opacity: 0.35, padding: 12, color: FOREST, lineHeight: 1 }}>→</button>
+                </div>
+            </div>
+        </div>
+    );
+
+    if (screen === 'onboarding-name') return (
+        <div style={shell}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '60px 40px 40px' }}>
+                <div style={{ flex: 1 }}>
+                    <p style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.2em', opacity: 0.4, color: FOREST, margin: '0 0 16px' }}>Onboarding 1/2</p>
+                    <h2 className="serif" style={{ fontSize: 30, color: FOREST, margin: '0 0 32px', fontStyle: 'italic' }}>What should we call you?</h2>
+                    <input
+                        type="text" value={name} onChange={e => setName(e.target.value)}
+                        placeholder="Your name"
+                        style={{ display: 'block', width: '100%', background: 'transparent', border: 'none', borderBottom: `1px solid ${ASH}`, padding: '12px 0', fontSize: 24, color: FOREST, outline: 'none', fontFamily: 'inherit' }}
+                    />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                    {primaryBtn('Continue', () => setScreen('onboarding-freq'))}
+                    <button onClick={() => setScreen('onboarding-freq')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.15em', opacity: 0.4, color: FOREST, padding: 8, fontFamily: 'inherit' }}>Skip</button>
+                </div>
+            </div>
+        </div>
+    );
+
+    if (screen === 'onboarding-freq') return (
+        <div style={shell}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '60px 40px 40px' }}>
+                <div style={{ flex: 1 }}>
+                    <p style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.2em', opacity: 0.4, color: FOREST, margin: '0 0 16px' }}>Onboarding 2/2</p>
+                    <h2 className="serif" style={{ fontSize: 30, color: FOREST, margin: '0 0 12px', fontStyle: 'italic' }}>Frequency of Pause</h2>
+                    <p style={{ opacity: 0.55, fontSize: 15, fontStyle: 'italic', lineHeight: 1.6, margin: '0 0 36px', color: FOREST }}>How many times a day would you like a reminder to notice?</p>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: 'rgba(255,255,255,0.5)', borderRadius: 999, padding: 6, marginBottom: 12 }}>
+                        {[1,3,5,8].map(n => (
+                            <button key={n} onClick={() => setFrequency(n)} style={{
+                                width: 52, height: 52, borderRadius: '50%', border: 'none',
+                                backgroundColor: frequency === n ? FOREST : 'transparent',
+                                color: frequency === n ? WHITE : FOREST,
+                                fontSize: 18, fontWeight: 500, cursor: 'pointer', opacity: frequency === n ? 1 : 0.4,
+                                fontFamily: 'inherit',
+                            }}>{n}</button>
+                        ))}
+                    </div>
+                    <p style={{ textAlign: 'center', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.3, color: FOREST }}>The bell will chime at random moments.</p>
+                </div>
+                {primaryBtn('Begin Practice', () => setScreen('home'))}
+            </div>
+        </div>
+    );
+
+    if (screen === 'home') return (
+        <div style={shell}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '60px 28px 36px', overflowY: 'auto' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 40 }}>
+                    <div>
+                        <p style={{ fontSize: 11, opacity: 0.4, textTransform: 'uppercase', letterSpacing: '0.2em', margin: '0 0 4px', color: FOREST }}>{date}</p>
+                        <h2 className="serif" style={{ fontSize: 30, color: FOREST, margin: 0, fontStyle: 'italic' }}>Welcome, {name || 'friend'}</h2>
+                    </div>
+                    <button onClick={() => setScreen('settings')} style={{ background: 'none', border: 'none', cursor: 'pointer', opacity: 0.4, padding: 8, fontSize: 20 }}>⚙</button>
+                </div>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: 32 }}>
+                    <div style={{ width: 180, height: 180, borderRadius: '50%', border: `1px solid rgba(46,74,66,0.15)`, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 28 }}>
+                        <div style={{ width: 140, height: 140, borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20, textAlign: 'center' }}>
+                            <p style={{ fontSize: 13, fontStyle: 'italic', opacity: 0.55, lineHeight: 1.5, color: FOREST, margin: 0 }}>
+                                Ready to notice?<br/>
+                                <span style={{ fontSize: 9, textTransform: 'uppercase', letterSpacing: '0.2em', opacity: 0.5 }}>or wait for next bell</span>
+                            </p>
+                        </div>
+                    </div>
+                    <button onClick={openLog} style={{ padding: '14px 32px', borderRadius: 999, border: `1.5px solid ${ASH}`, backgroundColor: 'transparent', color: FOREST, fontSize: 14, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit' }}>
+                        Check-in Now
+                    </button>
+                </div>
+                <button onClick={() => setScreen('month-summary')} style={{ backgroundColor: 'rgba(255,255,255,0.55)', borderRadius: 24, padding: '20px 24px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', textAlign: 'left', width: '100%', fontFamily: 'inherit' }}>
+                    <div>
+                        <p style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.2em', opacity: 0.4, color: FOREST, margin: '0 0 10px' }}>Month Summary</p>
+                        <span className="serif" style={{ fontSize: 36, color: FOREST }}>12</span>
+                        <p style={{ fontSize: 9, textTransform: 'uppercase', letterSpacing: '0.15em', opacity: 0.4, color: FOREST, margin: '2px 0 0' }}>Observations</p>
+                    </div>
+                    <span style={{ fontSize: 22, opacity: 0.25, color: FOREST }}>›</span>
+                </button>
+            </div>
+        </div>
+    );
+
+    if (screen === 'month-summary') return (
+        <div style={shell}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '60px 28px 36px', overflowY: 'auto', gap: 24 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <button onClick={() => setScreen('home')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 22, color: FOREST, padding: 4 }}>←</button>
+                    <h3 className="serif" style={{ fontSize: 20, fontStyle: 'italic', color: FOREST, margin: 0 }}>Awareness Map</h3>
+                    <div style={{ width: 36 }} />
+                </div>
+                <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+                        <p style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.2em', opacity: 0.4, color: FOREST, margin: 0 }}>Current Rhythm</p>
+                        <p style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.3, color: FOREST, margin: 0 }}>{month}</p>
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7,1fr)', gap: 6 }}>
+                        {[...Array(31)].map((_,i) => (
+                            <div key={i} style={{ aspectRatio: '1', borderRadius: 6, backgroundColor: i%4===0 ? 'rgba(46,74,66,0.4)' : i%7===0 ? 'rgba(195,160,89,0.35)' : 'rgba(182,177,169,0.15)' }} />
+                        ))}
+                    </div>
+                </div>
+                <div style={{ backgroundColor: 'rgba(255,255,255,0.5)', borderRadius: 24, padding: '24px 20px' }}>
+                    <p style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.2em', opacity: 0.4, color: FOREST, margin: '0 0 20px' }}>Top Sensations</p>
+                    {[{l:'Cheerful',c:5},{l:'Serene',c:4},{l:'Anxious',c:2},{l:'Irritated',c:1}].map(item => (
+                        <div key={item.l} style={{ marginBottom: 14 }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 6, color: FOREST }}>
+                                <span style={{ fontStyle: 'italic' }}>{item.l}</span>
+                                <span style={{ opacity: 0.4 }}>{item.c}x</span>
+                            </div>
+                            <div style={{ height: 5, backgroundColor: 'rgba(182,177,169,0.2)', borderRadius: 999 }}>
+                                <div style={{ height: '100%', borderRadius: 999, backgroundColor: FOREST, width: `${(item.c/5)*100}%`, opacity: 0.7 }} />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+
+    if (screen === 'log') {
+        const selCats = selectedIds.map(id => EMOTIONS.find(e => e.id === id)).filter(Boolean);
+
+        return (
+            <div style={shell}>
+                {/* Header */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '54px 24px 12px', flexShrink: 0 }}>
+                    <button onClick={() => logPhase === 2 ? setLogPhase(1) : setScreen('home')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 24, color: FOREST, lineHeight: 1, padding: 4 }}>←</button>
+                    <span style={{ fontSize: 14, fontWeight: 500, color: FOREST }}>{logPhase === 1 ? 'What are you feeling?' : 'Set the volume'}</span>
+                    <div style={{ width: 36 }} />
+                </div>
+
+                {/* Phase 1 — multi-select bubbles */}
+                {logPhase === 1 && (
+                    <>
+                        <div style={{ flex: 1, overflowY: 'auto', padding: '4px 20px 20px' }}>
+                            <p style={{ fontSize: 13, color: ASH, fontWeight: 300, lineHeight: 1.6, margin: '0 0 20px 4px' }}>
+                                Select everything that's present. You can feel more than one thing.
+                            </p>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                                {EMOTIONS.map(em => {
+                                    const sel = selectedIds.includes(em.id);
+                                    return (
+                                        <button key={em.id} onClick={() => toggleCat(em.id)} style={{
+                                            padding: '28px 16px', borderRadius: 16,
+                                            border: sel ? '2px solid rgba(255,255,255,0.45)' : '2px solid transparent',
+                                            backgroundColor: sel ? CAT_COLORS[em.id].bubble : WHITE,
+                                            color: sel ? WHITE : FOREST,
+                                            fontSize: 18, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit',
+                                            boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
+                                        }}>{em.label}</button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                        <div style={{ padding: '12px 24px 40px', flexShrink: 0 }}>
+                            {primaryBtn(
+                                selectedIds.length === 0 ? 'Select at least one' : 'Continue →',
+                                goPhase2,
+                                selectedIds.length === 0
+                            )}
+                        </div>
+                    </>
+                )}
+
+                {/* Phase 2 — intensity sliders */}
+                {logPhase === 2 && (
+                    <>
+                        <div style={{ flex: 1, overflowY: 'auto', padding: '4px 20px 20px' }}>
+                            <p style={{ fontSize: 13, color: ASH, fontWeight: 300, lineHeight: 1.6, margin: '0 0 16px 4px' }}>
+                                Drag to find the word that matches your inner volume.
+                            </p>
+                            {selCats.map(cat => (
+                                <IntensityCard
+                                    key={cat.id}
+                                    id={cat.id}
+                                    label={cat.label}
+                                    intensity={intensities[cat.id] ?? 5}
+                                    onChange={(id, val) => setIntensities(prev => ({ ...prev, [id]: val }))}
+                                />
+                            ))}
+                            <div style={{ height: 80 }} />
+                        </div>
+                        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '12px 24px 40px', backgroundColor: LINEN }}>
+                            {primaryBtn('Save check-in', () => setScreen('noted'))}
+                        </div>
+                    </>
+                )}
             </div>
         );
+    }
 
-        const Button = ({ children, onClick, variant = 'primary', className = '' }) => {
-            const styles = {
-                primary: { backgroundColor: COLORS.forest, color: COLORS.linen },
-                secondary: { backgroundColor: 'transparent', border: `1px solid ${COLORS.ash}`, color: COLORS.forest },
-                danger: { backgroundColor: 'transparent', border: `1px solid ${COLORS.rose}`, color: COLORS.rose }
-            };
+    if (screen === 'noted') return (
+        <div style={shell}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 48 }}>
+                <div style={{ fontSize: 64, marginBottom: 20, opacity: 0.25, color: FOREST }}>✓</div>
+                <h2 className="serif" style={{ fontSize: 40, color: FOREST, fontStyle: 'italic', margin: '0 0 12px' }}>Noted.</h2>
+                <p style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.2em', opacity: 0.45, color: FOREST, margin: 0 }}>The sensation is seen.</p>
+            </div>
+        </div>
+    );
 
-            return (
-                <button 
-                    onClick={onClick}
-                    className={`px-8 py-4 rounded-full font-medium transition-all active:scale-95 text-center flex items-center justify-center gap-2 ${className}`}
-                    style={styles[variant]}
-                >
-                    {children}
+    if (screen === 'settings') return (
+        <div style={shell}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '60px 24px 40px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32 }}>
+                    <button onClick={() => setScreen('home')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 22, opacity: 0.5, padding: 4, color: FOREST }}>×</button>
+                    <h3 className="serif" style={{ fontSize: 20, fontStyle: 'italic', color: FOREST, margin: 0 }}>Settings</h3>
+                    <div style={{ width: 36 }} />
+                </div>
+                <div style={{ backgroundColor: 'rgba(255,255,255,0.5)', borderRadius: 20, padding: '18px 22px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                    <span style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.15em', opacity: 0.5, color: FOREST }}>Daily Reminders</span>
+                    <span className="serif" style={{ fontSize: 26, color: FOREST }}>{frequency}</span>
+                </div>
+                <button style={{ backgroundColor: 'rgba(178,139,132,0.12)', borderRadius: 20, padding: '18px 22px', border: 'none', color: ROSE, cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', fontFamily: 'inherit', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.15em', fontWeight: 600 }}>
+                    Clear Records <span>〜</span>
                 </button>
-            );
-        };
+            </div>
+        </div>
+    );
 
-        function App() {
-            const [screen, setScreen] = useState('splash');
-            const [randomQuote, setRandomQuote] = useState({ text: '', author: '' });
-            const [name, setName] = useState('');
-            const [frequency, setFrequency] = useState(3);
-            const [selectedCore, setSelectedCore] = useState(null);
-            const [selectedSecondary, setSelectedSecondary] = useState(null);
-            const [selectedNuance, setSelectedNuance] = useState(null);
-            const [activeDef, setActiveDef] = useState(null);
-            const [showAniccaConfirm, setShowAniccaConfirm] = useState(false);
+    return null;
+}
 
-            useEffect(() => {
-                // Initialize Lucide icons whenever screen changes
-                lucide.createIcons();
-            }, [screen, selectedCore, selectedSecondary, activeDef, showAniccaConfirm]);
-
-            useEffect(() => {
-                const quote = MINDFULNESS_QUOTES[Math.floor(Math.random() * MINDFULNESS_QUOTES.length)];
-                setRandomQuote(quote);
-
-                if (screen === 'splash') {
-                    const timer = setTimeout(() => setScreen('welcome'), 2500);
-                    return () => clearTimeout(timer);
-                }
-                if (screen === 'noted') {
-                    const timer = setTimeout(() => setScreen('home'), 2500);
-                    return () => clearTimeout(timer);
-                }
-            }, [screen]);
-
-            const resetLogState = () => {
-                setSelectedCore(null);
-                setSelectedSecondary(null);
-                setSelectedNuance(null);
-            };
-
-            const handleBack = () => {
-                if (selectedNuance) setSelectedNuance(null);
-                else if (selectedSecondary) setSelectedSecondary(null);
-                else if (selectedCore) setSelectedCore(null);
-                else setScreen('home');
-            };
-
-            const renderScreen = () => {
-                switch(screen) {
-                    case 'splash':
-                        return (
-                            <div className="flex-1 flex flex-col items-center justify-center p-8 text-center animate-pulse">
-                                <h1 className="text-5xl font-serif italic mb-2" style={{ color: COLORS.forest }}>Emoti</h1>
-                                <p className="text-xs tracking-[0.4em] uppercase opacity-40 font-light" style={{ color: COLORS.forest }}>A moment to notice</p>
-                            </div>
-                        );
-
-                    case 'welcome':
-                        return (
-                            <div className="flex-1 flex flex-col p-10 relative">
-                                <div className="flex-1 flex flex-col justify-center px-4">
-                                    <div className="max-w-xs mx-auto text-center">
-                                        <h2 className="text-3xl font-serif mb-6 leading-tight italic" style={{ color: COLORS.forest }}>
-                                            "{randomQuote.text}"
-                                        </h2>
-                                        <div className="w-12 h-[1px] bg-forest opacity-20 mx-auto mb-4"></div>
-                                        <p className="text-[10px] uppercase tracking-widest opacity-60" style={{ color: COLORS.forest }}>
-                                            — {randomQuote.author}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="pb-16 flex justify-center">
-                                    <button onClick={() => setScreen('onboarding-name')} className="opacity-30 hover:opacity-100 transition-opacity p-4">
-                                         <Icon name="arrow-right" size={28} />
-                                    </button>
-                                </div>
-                            </div>
-                        );
-
-                    case 'onboarding-name':
-                        return (
-                            <div className="flex-1 flex flex-col p-10">
-                                <div className="flex-1 flex flex-col justify-center">
-                                    <label className="text-[10px] uppercase tracking-[0.2em] mb-4 opacity-40 font-bold" style={{ color: COLORS.forest }}>Onboarding 1/2</label>
-                                    <h2 className="text-3xl font-serif mb-8" style={{ color: COLORS.forest }}>What should we call you?</h2>
-                                    <input 
-                                        type="text" 
-                                        value={name} 
-                                        onChange={(e) => setName(e.target.value)}
-                                        placeholder="Your name" 
-                                        className="bg-transparent border-b border-ash py-4 text-2xl outline-none placeholder:opacity-20 focus:border-forest transition-all"
-                                        style={{ color: COLORS.forest }}
-                                    />
-                                </div>
-                                <div className="flex flex-col gap-4">
-                                    <Button onClick={() => setScreen('onboarding-freq')}>Continue</Button>
-                                    <button onClick={() => setScreen('onboarding-freq')} className="text-[10px] uppercase tracking-widest opacity-40 py-2">Skip</button>
-                                </div>
-                            </div>
-                        );
-
-                    case 'onboarding-freq':
-                        return (
-                            <div className="flex-1 flex flex-col p-10">
-                                <div className="flex-1 flex flex-col justify-center">
-                                    <label className="text-[10px] uppercase tracking-[0.2em] mb-4 opacity-40 font-bold" style={{ color: COLORS.forest }}>Onboarding 2/2</label>
-                                    <h2 className="text-3xl font-serif mb-4" style={{ color: COLORS.forest }}>Frequency of Pause</h2>
-                                    <p className="opacity-60 mb-10 leading-relaxed italic">How many times a day would you like a reminder to notice?</p>
-                                    
-                                    <div className="flex justify-between items-center bg-white/40 p-2 rounded-full mb-6">
-                                        {[1, 3, 5, 8].map((num) => (
-                                            <button 
-                                                key={num}
-                                                onClick={() => setFrequency(num)}
-                                                className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${frequency === num ? 'bg-forest text-white shadow-lg scale-110' : 'text-forest opacity-40'}`}
-                                                style={frequency === num ? { backgroundColor: COLORS.forest } : {}}
-                                            >
-                                                {num}
-                                            </button>
-                                        ))}
-                                    </div>
-                                    <p className="text-center text-[10px] uppercase tracking-tighter opacity-30">The bell will chime at random moments.</p>
-                                </div>
-                                <Button onClick={() => setScreen('home')}>Begin Practice</Button>
-                            </div>
-                        );
-
-                    case 'home':
-                        return (
-                            <div className="flex-1 flex flex-col p-8 overflow-y-auto">
-                                <div className="flex justify-between items-start mb-10">
-                                    <div>
-                                        <h3 className="text-[10px] opacity-40 uppercase tracking-[0.2em] mb-1">{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}</h3>
-                                        <h2 className="text-3xl font-serif text-forest">Welcome, {name || 'friend'}</h2>
-                                    </div>
-                                    <button onClick={() => setScreen('settings')} className="p-2 opacity-40"><Icon name="settings" size={20}/></button>
-                                </div>
-                                
-                                <div className="flex-1 flex flex-col items-center justify-center text-center mb-12">
-                                    <div className="w-48 h-48 rounded-full border border-ash/30 flex items-center justify-center relative mb-8">
-                                        <div className="absolute inset-0 rounded-full animate-ping opacity-10 bg-forest scale-75"></div>
-                                        <div className="w-40 h-40 rounded-full bg-white/40 flex items-center justify-center p-6">
-                                             <p className="text-sm italic opacity-60 leading-relaxed">
-                                                 Ready to notice?<br/>
-                                                 <span className="text-[10px] uppercase tracking-widest opacity-40">or wait for next bell</span>
-                                             </p>
-                                        </div>
-                                    </div>
-                                    <Button onClick={() => { resetLogState(); setScreen('log'); }} variant="secondary">Check-in Now</Button>
-                                </div>
-
-                                <button 
-                                    onClick={() => setScreen('month-summary')}
-                                    className="w-full bg-white/50 rounded-[2.5rem] p-6 mb-4 text-left active:scale-[0.98] transition-transform flex items-center justify-between group"
-                                >
-                                    <div className="flex-1">
-                                        <div className="flex items-center gap-2 mb-4">
-                                            <Icon name="calendar" size={14} className="opacity-40" />
-                                            <h4 className="text-[10px] uppercase tracking-[0.2em] opacity-40 font-bold">Month Summary</h4>
-                                        </div>
-                                        <div className="flex items-end gap-4">
-                                            <div>
-                                                <div className="text-4xl font-serif text-forest">12</div>
-                                                <div className="text-[10px] uppercase tracking-widest opacity-40">Observations</div>
-                                            </div>
-                                            <div className="pb-1">
-                                                <div className="px-3 py-1 bg-ochre/10 text-ochre text-[10px] rounded-full uppercase tracking-widest font-bold">Details</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <Icon name="chevron-right" className="opacity-20 group-hover:translate-x-1 transition-all" />
-                                </button>
-                            </div>
-                        );
-
-                    case 'month-summary':
-                        return (
-                            <div className="flex-1 flex flex-col p-8 overflow-y-auto">
-                                <div className="flex justify-between items-center mb-10 shrink-0">
-                                    <button onClick={() => setScreen('home')} className="p-2 -ml-2"><Icon name="arrow-left" size={20}/></button>
-                                    <h3 className="font-serif italic text-xl">Awareness Map</h3>
-                                    <div className="w-9" />
-                                </div>
-
-                                <div className="space-y-8">
-                                    <section>
-                                        <div className="flex items-center justify-between mb-4">
-                                            <h4 className="text-[10px] uppercase tracking-[0.2em] opacity-40 font-bold">Current Rhythm</h4>
-                                            <span className="text-[10px] uppercase tracking-widest opacity-30 font-bold">{new Date().toLocaleDateString('en-US', { month: 'long' })}</span>
-                                        </div>
-                                        <div className="grid grid-cols-7 gap-2">
-                                            {[...Array(31)].map((_, i) => (
-                                                <div 
-                                                    key={i} 
-                                                    className={`aspect-square rounded-md transition-colors ${i % 4 === 0 ? 'bg-forest/40' : i % 7 === 0 ? 'bg-ochre/30' : 'bg-ash/10'}`}
-                                                ></div>
-                                            ))}
-                                        </div>
-                                    </section>
-
-                                    <section className="bg-white/40 p-6 rounded-[2.5rem]">
-                                        <h4 className="text-[10px] uppercase tracking-[0.2em] opacity-40 font-bold mb-6">Top Sensations</h4>
-                                        <div className="space-y-4">
-                                            {[
-                                                { label: 'Contentment', count: 5, color: COLORS.ochre },
-                                                { label: 'Peaceful', count: 4, color: COLORS.forest },
-                                                { label: 'Anxiety', count: 2, color: COLORS.ash },
-                                                { label: 'Satisfied', count: 1, color: COLORS.rose },
-                                            ].map((item) => (
-                                                <div key={item.label}>
-                                                    <div className="flex justify-between text-xs mb-1.5 font-medium italic">
-                                                        <span>{item.label}</span>
-                                                        <span className="opacity-40">{item.count}x</span>
-                                                    </div>
-                                                    <div className="h-1.5 w-full bg-ash/10 rounded-full overflow-hidden">
-                                                        <div className="h-full rounded-full" style={{ width: `${(item.count/5)*100}%`, backgroundColor: item.color }}></div>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </section>
-
-                                    <div className="p-8 bg-forest text-linen rounded-[2.5rem] flex flex-col items-center text-center">
-                                        <Icon name="book-open" size={24} className="mb-4 opacity-40" />
-                                        <p className="text-base italic opacity-80 leading-relaxed mb-4">"Awareness is the first step in healing."</p>
-                                        <div className="w-8 h-[1px] bg-white opacity-20"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        );
-
-                    case 'log':
-                        const coreObj = EMOTIONS_DATA.find(e => e.id === selectedCore);
-                        const secondaryObj = coreObj?.secondary.find(s => s.id === selectedSecondary);
-
-                        return (
-                            <div className="flex-1 flex flex-col p-6 relative">
-                                <div className="flex justify-between items-center mb-6 shrink-0">
-                                    <button onClick={handleBack} className="p-2"><Icon name="arrow-left" size={20} /></button>
-                                    <h3 className="font-serif italic text-lg text-forest">Presence</h3>
-                                    <div className="w-9" />
-                                </div>
-
-                                <div className="flex gap-2 justify-center mb-10">
-                                    <div className={`h-1 w-8 rounded-full transition-all duration-300 ${selectedCore ? 'bg-forest opacity-100' : 'bg-forest opacity-20'}`}></div>
-                                    <div className={`h-1 w-8 rounded-full transition-all duration-300 ${selectedSecondary ? 'bg-forest opacity-100' : 'bg-forest opacity-20'}`}></div>
-                                    <div className={`h-1 w-8 rounded-full transition-all duration-300 ${selectedNuance ? 'bg-forest opacity-100' : 'bg-forest opacity-20'}`}></div>
-                                </div>
-
-                                <div className="text-center mb-8 shrink-0">
-                                    <h2 className="text-2xl font-serif mb-2 text-forest">
-                                        {!selectedCore ? "The Root Sensation" : 
-                                         !selectedSecondary ? `In what way ${coreObj.label}?` : 
-                                         `Finding the Nuance`}
-                                    </h2>
-                                    <p className="text-sm opacity-50 italic">
-                                        {!selectedCore ? "Choose the primary emotion." : 
-                                         !selectedSecondary ? "Define the secondary layer." : 
-                                         "Touch the deepest naming."}
-                                    </p>
-                                </div>
-
-                                <div className="flex-1 flex items-center justify-center">
-                                    {!selectedCore && (
-                                        <div className="relative w-72 h-72 sm:w-80 sm:h-80">
-                                            <svg viewBox="0 0 100 100" className="w-full h-full transform -rotate-90">
-                                                {EMOTIONS_DATA.map((emo, index) => {
-                                                    const startAngle = index * 90;
-                                                    const endAngle = (index + 1) * 90;
-                                                    const x1 = 50 + 50 * Math.cos((Math.PI * startAngle) / 180);
-                                                    const y1 = 50 + 50 * Math.sin((Math.PI * startAngle) / 180);
-                                                    const x2 = 50 + 50 * Math.cos((Math.PI * endAngle) / 180);
-                                                    const y2 = 50 + 50 * Math.sin((Math.PI * endAngle) / 180);
-                                                    return (
-                                                        <path
-                                                            key={emo.id}
-                                                            d={`M 50 50 L ${x1} ${y1} A 50 50 0 0 1 ${x2} ${y2} Z`}
-                                                            fill={emo.color}
-                                                            fillOpacity="0.7"
-                                                            stroke="white"
-                                                            strokeWidth="0.5"
-                                                            className="cursor-pointer transition-all hover:fill-opacity-100"
-                                                            onClick={() => setSelectedCore(emo.id)}
-                                                        />
-                                                    );
-                                                })}
-                                            </svg>
-                                            {EMOTIONS_DATA.map((emo, index) => {
-                                                const angle = (index * 90) + 45 - 90;
-                                                const r = 32;
-                                                const x = 50 + r * Math.cos((Math.PI * angle) / 180);
-                                                const y = 50 + r * Math.sin((Math.PI * angle) / 180);
-                                                return (
-                                                    <div key={emo.id} className="absolute pointer-events-none text-xs font-bold uppercase tracking-widest" style={{ left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -50%)', color: COLORS.forest }}>
-                                                        {emo.label}
-                                                    </div>
-                                                );
-                                            })}
-                                            <div className="absolute inset-0 m-auto w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-inner">
-                                                <div className="w-1.5 h-1.5 bg-ash opacity-40 rounded-full animate-pulse"></div>
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {selectedCore && !selectedSecondary && (
-                                        <div className="w-full grid grid-cols-1 gap-4 px-4">
-                                            {coreObj.secondary.map(sec => (
-                                                <button 
-                                                    key={sec.id}
-                                                    onClick={() => setSelectedSecondary(sec.id)}
-                                                    className="p-8 bg-white/70 rounded-3xl text-center text-xl font-serif italic border border-ash/10 hover:bg-white transition-all shadow-sm"
-                                                    style={{ color: COLORS.forest }}
-                                                >
-                                                    {sec.label}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    )}
-
-                                    {selectedSecondary && (
-                                        <div className="w-full space-y-3 px-4">
-                                            {secondaryObj.nuances.map(nuance => (
-                                                <div 
-                                                    key={nuance.id}
-                                                    className={`flex items-center gap-2 p-5 rounded-2xl transition-all cursor-pointer ${selectedNuance === nuance.id ? 'bg-forest text-white shadow-lg' : 'bg-white/70'}`}
-                                                    onClick={() => setSelectedNuance(nuance.id)}
-                                                >
-                                                    <div className="flex-1 font-medium italic">{nuance.label}</div>
-                                                    <button 
-                                                        onClick={(e) => { e.stopPropagation(); setActiveDef(nuance); }}
-                                                        className="p-2 opacity-40 hover:opacity-100 transition-opacity"
-                                                    >
-                                                        <Icon name="info" size={18} />
-                                                    </button>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div className="mt-8 shrink-0 pb-4 px-4">
-                                    <Button 
-                                        className={`w-full transition-all duration-300 ${!selectedNuance ? 'opacity-20 pointer-events-none' : ''}`}
-                                        onClick={() => setScreen('noted')}
-                                    >
-                                        Log Sensation
-                                    </Button>
-                                </div>
-
-                                {activeDef && (
-                                    <div className="absolute inset-0 bg-black/20 backdrop-blur-sm z-50 flex flex-col justify-end p-4">
-                                        <div className="bg-linen p-8 rounded-[2.5rem] shadow-2xl relative">
-                                            <button onClick={() => setActiveDef(null)} className="absolute top-6 right-6 opacity-30 p-2"><Icon name="x" size={20}/></button>
-                                            <h4 className="text-3xl font-serif mb-4 text-forest italic">{activeDef.label}</h4>
-                                            <p className="text-lg opacity-80 leading-relaxed italic">{activeDef.def}</p>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        );
-
-                    case 'noted':
-                        return (
-                            <div className="flex-1 flex flex-col items-center justify-center p-12 text-center">
-                                <Icon name="check-circle-2" size={64} className="mb-6 opacity-20 text-forest" />
-                                <h2 className="text-4xl font-serif italic mb-4 text-forest">Noted.</h2>
-                                <p className="opacity-60 text-sm tracking-widest uppercase">The sensation is seen.</p>
-                            </div>
-                        );
-
-                    case 'settings':
-                        return (
-                            <div className="flex-1 flex flex-col p-6">
-                                 <div className="flex justify-between items-center mb-8 shrink-0">
-                                    <button onClick={() => setScreen('home')} className="p-2 -ml-2"><Icon name="x" size={24}/></button>
-                                    <h3 className="font-serif italic text-xl">Settings</h3>
-                                    <div className="w-10" />
-                                </div>
-                                <div className="space-y-4">
-                                    <div className="p-6 bg-white/50 rounded-3xl flex justify-between items-center">
-                                        <span className="opacity-60 text-sm font-bold tracking-widest uppercase">Daily Reminders</span>
-                                        <span className="text-2xl font-serif text-forest">{frequency}</span>
-                                    </div>
-                                    <button 
-                                        onClick={() => setShowAniccaConfirm(true)}
-                                        className="w-full p-6 bg-rose/10 text-rose rounded-3xl flex items-center justify-between transition-colors hover:bg-rose/20"
-                                    >
-                                        <span className="font-bold text-sm tracking-widest uppercase">Clear Records</span>
-                                        <Icon name="wind" size={20} />
-                                    </button>
-                                </div>
-                                {showAniccaConfirm && (
-                                    <div className="absolute inset-0 bg-linen/95 backdrop-blur-md z-50 p-10 flex flex-col justify-center text-center">
-                                         <Icon name="wind" size={48} className="mx-auto mb-6 text-rose opacity-40" />
-                                         <h4 className="text-2xl font-serif mb-4">Letting go?</h4>
-                                         <p className="opacity-60 mb-8 text-sm italic">This practice will permanently clear your awareness record from this device.</p>
-                                         <div className="flex flex-col gap-3">
-                                                <Button variant="danger" onClick={() => { setScreen('home'); setShowAniccaConfirm(false); }}>Confirm</Button>
-                                                <button onClick={() => setShowAniccaConfirm(false)} className="text-[10px] uppercase tracking-widest opacity-40 py-2">Cancel</button>
-                                         </div>
-                                    </div>
-                                )}
-                            </div>
-                        );
-
-                    default: return null;
-                }
-            };
-
-            return (
-                <ScreenWrapper>
-                    {renderScreen()}
-                </ScreenWrapper>
-            );
-        }
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
 </body>
 </html>

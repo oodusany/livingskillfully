@@ -1,200 +1,102 @@
 /**
  * Emotions Data Structure
- * 3-layer emotion vocabulary for the feelings wheel
- * Based on Vipassana-inspired emotional awareness practice
+ * Willcox vocabulary merged with Plutchik intensity logic.
+ * 7 core categories, each with 3 intensity tiers (low/mid/high), 3 words per tier.
  */
 
 export const EMOTIONS_DATA = [
   {
-    id: 'joy',
-    label: 'Joy',
-    color: '#E8D2A6',
-    secondary: [
-      {
-        id: 'contentment',
-        label: 'Contentment',
-        nuances: [
-          {
-            id: 'peaceful',
-            label: 'Peaceful',
-            def: 'A state of calm and quiet serenity.'
-          },
-          {
-            id: 'satisfied',
-            label: 'Satisfied',
-            def: 'Pleasure derived from fulfilled needs.'
-          }
-        ]
-      },
-      {
-        id: 'excitement',
-        label: 'Excitement',
-        nuances: [
-          {
-            id: 'energetic',
-            label: 'Energetic',
-            def: 'Feeling a surge of vitality and spirit.'
-          },
-          {
-            id: 'eager',
-            label: 'Eager',
-            def: 'A keen, expectant desire for what is coming.'
-          }
-        ]
-      }
-    ]
+    id: 'mad',
+    label: 'Mad',
+    levels: {
+      low: ['Skeptical', 'Annoyed', 'Irritated'],
+      mid: ['Angry', 'Frustrated', 'Resentful'],
+      high: ['Furious', 'Livid', 'Enraged'],
+    },
   },
   {
-    id: 'sadness',
-    label: 'Sadness',
-    color: '#A3B7C1',
-    secondary: [
-      {
-        id: 'loneliness',
-        label: 'Loneliness',
-        nuances: [
-          {
-            id: 'isolated',
-            label: 'Isolated',
-            def: 'Feeling physically or emotionally set apart.'
-          },
-          {
-            id: 'abandoned',
-            label: 'Abandoned',
-            def: 'Feeling left behind or without support.'
-          }
-        ]
-      },
-      {
-        id: 'despair',
-        label: 'Despair',
-        nuances: [
-          {
-            id: 'powerless',
-            label: 'Powerless',
-            def: 'Lacking the ability or influence to change things.'
-          },
-          {
-            id: 'empty',
-            label: 'Empty',
-            def: 'A hollow sensation of lacking inner substance.'
-          }
-        ]
-      }
-    ]
+    id: 'sad',
+    label: 'Sad',
+    levels: {
+      low: ['Pensive', 'Disappointed', 'Bored'],
+      mid: ['Sad', 'Lonely', 'Hurt'],
+      high: ['Devastated', 'Heartbroken', 'Agonized'],
+    },
   },
   {
-    id: 'anger',
-    label: 'Anger',
-    color: '#D4A5A5',
-    secondary: [
-      {
-        id: 'frustration',
-        label: 'Frustration',
-        nuances: [
-          {
-            id: 'annoyed',
-            label: 'Annoyed',
-            def: 'Slightly angry; a minor irritation.'
-          },
-          {
-            id: 'thwarted',
-            label: 'Thwarted',
-            def: 'Anger from being prevented from a goal.'
-          }
-        ]
-      },
-      {
-        id: 'resentment',
-        label: 'Resentment',
-        nuances: [
-          {
-            id: 'bitter',
-            label: 'Bitter',
-            def: 'Lingering anger from perceived unfairness.'
-          },
-          {
-            id: 'indignant',
-            label: 'Indignant',
-            def: 'Anger sparked by perceived injustice.'
-          }
-        ]
-      }
-    ]
+    id: 'scared',
+    label: 'Scared',
+    levels: {
+      low: ['Uneasy', 'Nervous', 'Worried'],
+      mid: ['Afraid', 'Anxious', 'Threatened'],
+      high: ['Terrified', 'Panicked', 'Overwhelmed'],
+    },
   },
   {
-    id: 'fear',
-    label: 'Fear',
-    color: '#C9C4B9',
-    secondary: [
-      {
-        id: 'anxiety',
-        label: 'Anxiety',
-        nuances: [
-          {
-            id: 'worried',
-            label: 'Worried',
-            def: 'Anxious about potential future problems.'
-          },
-          {
-            id: 'overwhelmed',
-            label: 'Overwhelmed',
-            def: 'Feeling submerged by intensity or volume.'
-          }
-        ]
-      },
-      {
-        id: 'threatened',
-        label: 'Threatened',
-        nuances: [
-          {
-            id: 'insecure',
-            label: 'Insecure',
-            def: 'Lacking confidence or feeling unsafe.'
-          },
-          {
-            id: 'exposed',
-            label: 'Exposed',
-            def: 'Feeling vulnerable to harm or judgment.'
-          }
-        ]
-      }
-    ]
-  }
+    id: 'joyful',
+    label: 'Joyful',
+    levels: {
+      low: ['Content', 'Amused', 'Satisfied'],
+      mid: ['Happy', 'Cheerful', 'Proud'],
+      high: ['Ecstatic', 'Jubilant', 'Euphoric'],
+    },
+  },
+  {
+    id: 'powerful',
+    label: 'Powerful',
+    levels: {
+      low: ['Capable', 'Valued', 'Noticed'],
+      mid: ['Strong', 'Confident', 'Important'],
+      high: ['Invincible', 'Empowered', 'Heroic'],
+    },
+  },
+  {
+    id: 'peaceful',
+    label: 'Peaceful',
+    levels: {
+      low: ['Calm', 'Quiet', 'Thoughtful'],
+      mid: ['Serene', 'Secure', 'Relaxed'],
+      high: ['Meditative', 'Blissful', 'Harmonious'],
+    },
+  },
+  {
+    id: 'bad',
+    label: 'Bad',
+    levels: {
+      low: ['Tired', 'Stressed', 'Busy'],
+      mid: ['Bored', 'Pressured', 'Apathetic'],
+      high: ['Overwhelmed', 'Out of Control', 'Depleted'],
+    },
+  },
 ];
 
 /**
- * Get emotion by ID
- * @param {string} emotionId - The emotion ID
- * @returns {Object|undefined} Emotion object
+ * Maps a slider intensity value (1-10) to the specific Willcox word for a category.
+ * Tiers: low (1-3), mid (4-7), high (8-10) — each has 3 words.
  */
-export const getEmotionById = (emotionId) => {
-  return EMOTIONS_DATA.find(emotion => emotion.id === emotionId);
+export const getWordForIntensity = (emotionId, intensity) => {
+  const emotion = EMOTIONS_DATA.find((e) => e.id === emotionId);
+  if (!emotion) return '';
+
+  const i = Math.round(intensity);
+  if (i <= 3) {
+    return emotion.levels.low[i - 1];
+  } else if (i <= 7) {
+    // 4 positions mapped to 3 words: 4,5→[0], 6→[1], 7→[2]
+    const idx = Math.min(2, Math.floor((i - 4) * 3 / 4));
+    return emotion.levels.mid[idx];
+  } else {
+    return emotion.levels.high[i - 8];
+  }
 };
 
 /**
- * Get secondary emotion by ID from a core emotion
- * @param {string} coreEmotionId - The core emotion ID
- * @param {string} secondaryEmotionId - The secondary emotion ID
- * @returns {Object|undefined} Secondary emotion object
+ * Returns the intensity tier name for a given slider value.
  */
-export const getSecondaryEmotion = (coreEmotionId, secondaryEmotionId) => {
-  const coreEmotion = getEmotionById(coreEmotionId);
-  if (!coreEmotion) return undefined;
-  return coreEmotion.secondary.find(sec => sec.id === secondaryEmotionId);
-};
-
-/**
- * Get nuanced emotion by ID
- * @param {string} coreEmotionId - The core emotion ID
- * @param {string} secondaryEmotionId - The secondary emotion ID
- * @param {string} nuancedEmotionId - The nuanced emotion ID
- * @returns {Object|undefined} Nuanced emotion object
- */
-export const getNuancedEmotion = (coreEmotionId, secondaryEmotionId, nuancedEmotionId) => {
-  const secondaryEmotion = getSecondaryEmotion(coreEmotionId, secondaryEmotionId);
-  if (!secondaryEmotion) return undefined;
-  return secondaryEmotion.nuances.find(nuance => nuance.id === nuancedEmotionId);
+export const getTierForIntensity = (intensity) => {
+  if (intensity <= 3) return 'low';
+  if (intensity <= 7) return 'mid';
+  return 'high';
 };
 
 export default EMOTIONS_DATA;
