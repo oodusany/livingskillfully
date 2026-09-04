@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kemi Odusanya - Life Coach</title>
-    <meta name="description" content="Life coach for Bay Area professionals and entrepreneurs. Book a free connection call, try the grounded decision kit, or join the community.">
+    <meta name="description" content="Somatic Life & Leadership Coaching for Bay Area professionals and entrepreneurs. Explore working together with Kemi Odusanya.">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -259,14 +259,10 @@
         <!-- Primary CTAs -->
         <div class="cta-section">
             <div class="cta-buttons">
-                <a href="index.html#book-session" class="cta-btn cta-primary">
-                    📞 Book Your Free 45-Minute Connection Call
+                <a href="index.html#life-coaching" class="cta-btn cta-primary">
+                    ✷ Work Together
                 </a>
-                
-                <button class="cta-btn cta-secondary" id="reset-kit-btn">
-                    ✨ Try the Grounded Decision Kit
-                </button>
-                
+
                 <a href="index.html#contact" class="cta-btn cta-tertiary">
                     📧 Subscribe to Newsletter
                 </a>
@@ -304,75 +300,7 @@
         </div>
     </div>
 
-    <!-- Reset Kit Modal (same as main site) -->
-    <div id="reset-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="modal-close" id="close-reset-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="modal-icon">✨</div>
-                <h2 class="modal-title">Step off the treadmill and refocus on what truly matters.</h2>
-                <p class="modal-description">
-                    Download the <strong>Grounded Decision Kit</strong> — a 15-minute guided practice to:
-                </p>
-                <ul class="modal-benefits">
-                    <li>Calm your nervous system</li>
-                    <li>Clear mental clutter</li>
-                    <li>Make grounded decisions with confidence</li>
-                </ul>
-                <div class="ml-embedded" data-form="Ue3tlk"></div>
-                <p class="modal-reassurance">You'll also receive occasional tools and reflections to help you thrive at work and in life. Unsubscribe anytime.</p>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Modal functionality for Reset Kit
-        const resetModal = {
-            modal: document.getElementById('reset-modal'),
-            openBtn: document.getElementById('reset-kit-btn'),
-            closeBtn: document.getElementById('close-reset-modal'),
-            
-            init() {
-                this.setupEventListeners();
-            },
-            
-            setupEventListeners() {
-                this.openBtn.addEventListener('click', () => this.openModal());
-                this.closeBtn.addEventListener('click', () => this.closeModal());
-                
-                // Close on overlay click
-                this.modal.addEventListener('click', (e) => {
-                    if (e.target === this.modal) {
-                        this.closeModal();
-                    }
-                });
-                
-                // Close on Escape key
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && this.modal.style.display === 'block') {
-                        this.closeModal();
-                    }
-                });
-            },
-            
-            openModal() {
-                this.modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            },
-            
-            closeModal() {
-                this.modal.style.display = 'none';
-                document.body.style.overflow = '';
-            }
-        };
-
-        // Initialize when DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            resetModal.init();
-        });
-
         // Mailerlite integration
         (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
         .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,

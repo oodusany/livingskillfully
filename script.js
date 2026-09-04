@@ -11,6 +11,8 @@ const cursor = {
     outline: document.querySelector('[data-cursor-outline]'),
     
     init() {
+        // Bail if the custom-cursor elements aren't present (e.g. homepage).
+        if (!this.dot || !this.outline) return;
         // Only initialize on devices that support hover
         if (window.matchMedia('(hover: hover)').matches) {
             this.setupEventListeners();
@@ -186,7 +188,7 @@ const forms = {
             });
             
             if (response.ok) {
-                this.showSuccessMessage('Thank you! I\'ll be in touch soon to schedule your free connection session.');
+                this.showSuccessMessage('Thank you! I\'ll be in touch soon to start the conversation.');
                 form.reset();
                 submitBtn.textContent = 'Application Sent! ✓';
                 
@@ -198,7 +200,7 @@ const forms = {
                         const toggleBtn = document.getElementById('booking-form-toggle');
                         if (toggleBtn) {
                             toggleBtn.classList.remove('expanded');
-                            toggleBtn.querySelector('.toggle-text').textContent = 'Apply for Your Free Connection Session';
+                            toggleBtn.querySelector('.toggle-text').textContent = 'Start a Conversation';
                         }
                     }, 3000);
                 }
@@ -610,7 +612,7 @@ const bookingFormToggle = {
                 } else {
                     formContainer.style.display = 'none';
                     toggleBtn.classList.remove('expanded');
-                    toggleBtn.querySelector('.toggle-text').textContent = 'Apply for Your Free Connection Session';
+                    toggleBtn.querySelector('.toggle-text').textContent = 'Start a Conversation';
                 }
             });
         }
@@ -849,6 +851,8 @@ const modalHandler = {
     init() {
         this.modal = document.getElementById('reset-modal');
         this.overlay = this.modal;
+        // Reset Kit modal has been removed from the site; skip setup if absent.
+        if (!this.modal) return;
         this.setupModalEvents();
         this.setupFormSubmission();
     },

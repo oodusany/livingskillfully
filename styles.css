@@ -255,7 +255,7 @@ h1, h2, h3, h4, h5, h6 {
 .hero {
     min-height: 100vh;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     position: relative;
     background: #E8E0D5;
     padding: 120px 0 80px;
@@ -266,7 +266,7 @@ h1, h2, h3, h4, h5, h6 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
-    align-items: flex-start;
+    align-items: center;
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
@@ -315,6 +315,19 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.1em;
 }
 
+.hero-modality {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #C3A059;
+    margin-top: -1rem;
+    margin-bottom: 1.25rem;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.5s forwards;
+}
+
 .hero-tagline {
     font-size: 1.2rem;
     color: #666;
@@ -327,6 +340,44 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-primary-cta {
     margin-bottom: 2rem;
+}
+
+/* Desktop hero — match left column height to the portrait and
+   distribute the content groups vertically across that height. */
+@media (min-width: 969px) {
+    .hero-content {
+        align-items: stretch;
+    }
+
+    .hero-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+    }
+
+    .hero-title {
+        margin-bottom: 0;
+    }
+
+    .hero-modality {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .hero-tagline {
+        margin-bottom: 0;
+    }
+
+    .hero-primary-cta {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .hero-text .hero-cta-section {
+        text-align: left;
+        margin-top: 0;
+    }
 }
 
 .primary-cta-flow {
@@ -3187,20 +3238,51 @@ s
         transform: rotate(-45deg) translate(7px, -6px);
     }
 
+    /* Mobile hero: natural document flow, no 100vh distribution. */
+    .hero {
+        min-height: auto;
+        display: block;
+        padding: 143px 0 3rem; /* clears the fixed header (~123px) + breathing room */
+    }
+
     .hero-content {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 3.25rem; /* CTA -> portrait ~52px */
         text-align: center;
+        align-items: stretch;
     }
-    
+
     .hero-text {
         order: 1;
+        display: block; /* override desktop flex space-between distribution */
     }
-    
+
+    .hero-title {
+        margin-bottom: 36px; /* headline -> label */
+    }
+
+    .hero-modality {
+        margin-top: 0;
+        margin-bottom: 22px; /* label -> description */
+        font-size: 1.0625rem; /* ~17px */
+    }
+
+    .hero-tagline {
+        margin: 0 auto 36px; /* description -> CTA */
+        font-size: 1.125rem; /* ~18px, not oversized */
+        line-height: 1.5;
+        max-width: 460px;
+    }
+
+    .hero-primary-cta {
+        margin: 0;
+    }
+
     .hero-visual {
         order: 2;
         max-width: 400px;
         margin: 0 auto;
+        width: 100%;
     }
 
     .hero-actions {
@@ -3345,7 +3427,11 @@ s
     }
 
     .hero {
-        padding-top: 2rem;
+        padding-top: 120px; /* clears the fixed header (~107px at this width) + gap */
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 9vw, 2.75rem); /* fits two lines within the viewport */
     }
 
     section {
@@ -5018,5 +5104,119 @@ s
     .sticky-cta-button {
         padding: 0.875rem 1.25rem;
         font-size: 0.9rem;
+    }
+}
+
+/* Training & Practice — understated credentials block */
+.training-practice {
+    padding: 2.5rem 0 3.5rem;
+}
+
+.training-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.training-columns {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-top: 1rem;
+}
+
+.training-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.training-list li {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+.training-list li strong {
+    color: #3a3a3a;
+    font-weight: 600;
+}
+
+.training-badge {
+    flex-shrink: 0;
+}
+
+/* Work Together — what we work on */
+.work-together-content {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.work-intro {
+    font-size: 1.1rem;
+    color: #4a4a4a;
+    line-height: 1.7;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Work Together section: darker, readable intro + tighter gap to the list */
+#life-coaching .section-subtitle {
+    color: #4a4a4a;
+}
+
+#life-coaching .section-header {
+    margin-bottom: 3rem; /* ~36% tighter than the default 4rem */
+}
+
+.work-topics {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 2rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, auto);
+    grid-auto-flow: column;
+    gap: 0.75rem 2rem;
+}
+
+.work-topics li {
+    position: relative;
+    padding-left: 1.5rem;
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+.work-topics li::before {
+    content: "✷";
+    position: absolute;
+    left: 0;
+    color: #C3A059;
+    font-size: 0.85rem;
+    top: 0.15rem;
+}
+
+.work-note {
+    font-size: 1.05rem;
+    color: #4a4a4a;
+    line-height: 1.7;
+    text-align: center;
+    font-style: italic;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+    .work-topics {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        grid-auto-flow: row;
     }
 }
