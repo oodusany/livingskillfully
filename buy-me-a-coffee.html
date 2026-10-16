@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="If Living Skillfully has inspired you, share a little love and help keep the work growing.">
+    <title>Buy me a Coffee - Living Skillfully</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #2e4a42;
+            --muted: #64716d;
+            --gold: #c3a059;
+            --gold-dark: #a08851;
+            --page: #e8e0d5;
+            --card: #f3eee7;
+            --line: rgba(46, 74, 66, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background:
+                radial-gradient(ellipse at 50% 46%, rgba(255, 255, 255, 0.2), transparent 60%),
+                var(--page);
+            color: var(--ink);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: min(100% - 3rem, 856px);
+            margin: 0 auto;
+            padding: 1rem 0;
+        }
+
+        .brand {
+            color: var(--ink);
+            font-family: 'Merriweather', serif;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+
+        .brand em {
+            color: var(--gold);
+            font-family: 'Playfair Display', serif;
+            font-weight: 500;
+        }
+
+        .back-link {
+            color: var(--muted);
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .back-link:hover,
+        .back-link:focus-visible {
+            color: var(--gold-dark);
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 3rem 1.25rem 2rem;
+        }
+
+        .intro {
+            max-width: 470px;
+            margin: 0 auto 2.3rem;
+            text-align: center;
+        }
+
+        .eyebrow {
+            color: var(--gold-dark);
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 0.75rem 0 0.45rem;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(2.7rem, 6vw, 4.25rem);
+            font-weight: 500;
+            letter-spacing: -0.055em;
+            line-height: 0.99;
+        }
+
+        h1 em {
+            color: var(--gold-dark);
+            font-weight: 500;
+        }
+
+        .intro p {
+            max-width: 410px;
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 0.8rem;
+            line-height: 1.65;
+        }
+
+        .donation-card {
+            width: min(100%, 470px);
+            padding: 1.6rem 1.85rem 1.35rem;
+            border: 1px solid rgba(46, 74, 66, 0.07);
+            border-radius: 22px;
+            background: var(--card);
+            box-shadow: 0 22px 60px rgba(75, 62, 44, 0.1);
+        }
+
+        .donation-card h2 {
+            margin: 0 0 0.25rem;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+            line-height: 1.35;
+        }
+
+        .card-note {
+            margin: 0 0 1.2rem;
+            color: var(--muted);
+            font-size: 0.7rem;
+        }
+
+        .quick-amounts {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0.4rem;
+        }
+
+        .quick-amount {
+            min-height: 44px;
+            padding: 0.35rem 0.2rem;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.48);
+            color: var(--ink);
+            cursor: pointer;
+            font: inherit;
+            line-height: 1.2;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .quick-amount:hover,
+        .quick-amount[aria-pressed="true"] {
+            border-color: rgba(195, 160, 89, 0.75);
+            background: rgba(195, 160, 89, 0.12);
+        }
+
+        .quick-count {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+
+        .quick-price {
+            display: block;
+            margin-top: 0.08rem;
+            color: var(--muted);
+            font-size: 0.58rem;
+        }
+
+        .quantity-label {
+            display: block;
+            margin: 1rem 0 0.45rem;
+            font-size: 0.58rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            min-height: 50px;
+            padding: 0.45rem 0.65rem;
+            border: 1px solid var(--line);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.48);
+        }
+
+        .stepper {
+            display: grid;
+            width: 30px;
+            height: 30px;
+            flex: 0 0 30px;
+            place-items: center;
+            padding: 0;
+            border: 1px solid rgba(46, 74, 66, 0.18);
+            border-radius: 50%;
+            background: transparent;
+            color: var(--ink);
+            cursor: pointer;
+            font: inherit;
+            font-size: 1rem;
+            line-height: 1;
+        }
+
+        .stepper:hover:not(:disabled) {
+            border-color: var(--gold);
+            background: rgba(195, 160, 89, 0.1);
+        }
+
+        .stepper:disabled {
+            cursor: not-allowed;
+            opacity: 0.45;
+        }
+
+        .quantity-value {
+            min-width: 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .unit-price {
+            margin-left: auto;
+            color: var(--muted);
+            font-size: 0.68rem;
+            white-space: nowrap;
+        }
+
+        .total-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin: 0.9rem 0 0.65rem;
+            color: var(--muted);
+            font-size: 0.68rem;
+        }
+
+        .total {
+            color: var(--ink);
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+        }
+
+        .divider {
+            height: 1px;
+            margin-bottom: 0.9rem;
+            background: var(--line);
+        }
+
+        .checkout-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 42px;
+            padding: 0.7rem 1rem;
+            border: 0;
+            border-radius: 999px;
+            background: linear-gradient(110deg, #caa658, #a88d4f);
+            box-shadow: 0 8px 20px rgba(160, 136, 81, 0.18);
+            color: #fff;
+            cursor: pointer;
+            font: 600 0.72rem 'Inter', sans-serif;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .checkout-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 11px 24px rgba(160, 136, 81, 0.28);
+        }
+
+        .checkout-note {
+            margin: 0.65rem 0 0;
+            color: var(--muted);
+            font-size: 0.58rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .checkout-note span {
+            color: var(--gold-dark);
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--gold-dark);
+            outline-offset: 3px;
+        }
+
+        @media (max-width: 480px) {
+            .page-header {
+                width: calc(100% - 2rem);
+            }
+
+            main {
+                padding-top: 2.3rem;
+            }
+
+            .intro {
+                margin-bottom: 1.8rem;
+            }
+
+            .donation-card {
+                padding: 1.35rem 1.15rem 1.2rem;
+                border-radius: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <a class="brand" href="index.html" aria-label="Living Skillfully home">Living <em>Skillfully</em></a>
+        <a class="back-link" href="index.html">Back to Home ↗</a>
+    </header>
+
+    <main>
+        <section class="intro" aria-labelledby="page-title">
+            <span class="eyebrow">Send your love ❤️</span>
+            <h1 id="page-title">A little love <em>goes a<br>long way.</em></h1>
+            <p>If my work has inspired you, brought a smile to your face, or made a difference in your day, you can share a little love to help me keep creating and growing.</p>
+        </section>
+
+        <section class="donation-card" aria-labelledby="donation-title">
+            <h2 id="donation-title">Choose how much love you’d like to share.</h2>
+            <p class="card-note">Each heart is $5.</p>
+
+            <div class="quick-amounts" aria-label="Choose a heart amount">
+                <button class="quick-amount" type="button" data-count="1" aria-pressed="true">
+                    <span class="quick-count">❤️ 1</span><span class="quick-price">$5</span>
+                </button>
+                <button class="quick-amount" type="button" data-count="3" aria-pressed="false">
+                    <span class="quick-count">❤️ 3</span><span class="quick-price">$15</span>
+                </button>
+                <button class="quick-amount" type="button" data-count="5" aria-pressed="false">
+                    <span class="quick-count">❤️ 5</span><span class="quick-price">$25</span>
+                </button>
+                <button class="quick-amount" type="button" data-count="10" aria-pressed="false">
+                    <span class="quick-count">💞 10</span><span class="quick-price">$50</span>
+                </button>
+            </div>
+
+            <span class="quantity-label" id="quantity-label">Number of hearts</span>
+            <div class="quantity-control">
+                <button class="stepper" id="decrease" type="button" aria-label="Remove one heart">−</button>
+                <output class="quantity-value" id="quantity-value" aria-live="polite" aria-labelledby="quantity-label">1</output>
+                <button class="stepper" id="increase" type="button" aria-label="Add one heart">+</button>
+                <span class="unit-price">❤️ $5 each</span>
+            </div>
+
+            <div class="total-row">
+                <span>Your total</span>
+                <output class="total" id="total" aria-live="polite">$5</output>
+            </div>
+            <div class="divider"></div>
+            <a class="checkout-button" href="https://buy.stripe.com/test_6oU14n6b83Mfa372360VO00" target="_blank" rel="noopener noreferrer">Send Your Love ❤️</a>
+            <p class="checkout-note"><span>⌁</span> Stripe test checkout is currently fixed at $5 per payment; the selection above updates the on-page total only.</p>
+        </section>
+    </main>
+
+    <script>
+        (() => {
+            const quantityOutput = document.getElementById('quantity-value');
+            const totalOutput = document.getElementById('total');
+            const decreaseButton = document.getElementById('decrease');
+            const increaseButton = document.getElementById('increase');
+            const quickAmountButtons = document.querySelectorAll('.quick-amount');
+            const maxQuantity = Math.floor(Number.MAX_SAFE_INTEGER / 5);
+            let quantity = 1;
+
+            function updateAmount() {
+                quantityOutput.textContent = quantity.toLocaleString();
+                totalOutput.textContent = `$${(quantity * 5).toLocaleString()}`;
+                decreaseButton.disabled = quantity <= 1;
+                increaseButton.disabled = quantity >= maxQuantity;
+
+                quickAmountButtons.forEach((button) => {
+                    button.setAttribute('aria-pressed', String(Number(button.dataset.count) === quantity));
+                });
+            }
+
+            quickAmountButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    quantity = Number(button.dataset.count);
+                    updateAmount();
+                });
+            });
+
+            decreaseButton.addEventListener('click', () => {
+                if (quantity > 1) {
+                    quantity -= 1;
+                    updateAmount();
+                }
+            });
+
+            increaseButton.addEventListener('click', () => {
+                if (quantity < maxQuantity) {
+                    quantity += 1;
+                    updateAmount();
+                }
+            });
+
+            updateAmount();
+        })();
+    </script>
+</body>
+</html>
