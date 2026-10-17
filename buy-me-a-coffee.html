@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="If Living Skillfully has inspired you, share a little love and help keep the work growing.">
+    <meta name="description" content="If Living Skillfully has inspired you, buy me a coffee and help keep the work growing.">
     <title>Buy me a Coffee - Living Skillfully</title>
     <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -176,65 +176,13 @@
             font-size: 0.58rem;
         }
 
-        .quantity-label {
-            display: block;
-            margin: 1rem 0 0.45rem;
-            font-size: 0.58rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
+        .quick-amount.other-amount {
+            grid-column: 1 / -1;
+            margin-top: 0.4rem;
         }
 
-        .quantity-control {
-            display: flex;
-            align-items: center;
-            gap: 0.65rem;
-            min-height: 50px;
-            padding: 0.45rem 0.65rem;
-            border: 1px solid var(--line);
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.48);
-        }
-
-        .stepper {
-            display: grid;
-            width: 30px;
-            height: 30px;
-            flex: 0 0 30px;
-            place-items: center;
-            padding: 0;
-            border: 1px solid rgba(46, 74, 66, 0.18);
-            border-radius: 50%;
-            background: transparent;
-            color: var(--ink);
-            cursor: pointer;
-            font: inherit;
-            font-size: 1rem;
-            line-height: 1;
-        }
-
-        .stepper:hover:not(:disabled) {
-            border-color: var(--gold);
-            background: rgba(195, 160, 89, 0.1);
-        }
-
-        .stepper:disabled {
-            cursor: not-allowed;
-            opacity: 0.45;
-        }
-
-        .quantity-value {
-            min-width: 1rem;
-            font-size: 0.85rem;
-            font-weight: 500;
-            text-align: center;
-        }
-
-        .unit-price {
-            margin-left: auto;
-            color: var(--muted);
-            font-size: 0.68rem;
-            white-space: nowrap;
+        .other-amount .quick-count {
+            font-size: 0.7rem;
         }
 
         .total-row {
@@ -252,6 +200,15 @@
             font-size: 2rem;
             font-weight: 700;
             letter-spacing: -0.04em;
+            text-align: right;
+        }
+
+        .total.is-note {
+            max-width: 60%;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
         }
 
         .divider {
@@ -328,36 +285,31 @@
 
     <main>
         <section class="intro" aria-labelledby="page-title">
-            <span class="eyebrow">Send your love ❤️</span>
-            <h1 id="page-title">A little love <em>goes a<br>long way.</em></h1>
-            <p>If my work has inspired you, brought a smile to your face, or made a difference in your day, you can share a little love to help me keep creating and growing.</p>
+            <span class="eyebrow">Buy me a coffee ☕</span>
+            <h1 id="page-title">A cup of coffee <em>goes a<br>long way.</em></h1>
+            <p>If my work has inspired you, brought a smile to your face, or made a difference in your day, you can buy me a coffee to help me keep creating and growing.</p>
         </section>
 
         <section class="donation-card" aria-labelledby="donation-title">
-            <h2 id="donation-title">Choose how much love you’d like to share.</h2>
-            <p class="card-note">Each heart is $5.</p>
+            <h2 id="donation-title">Choose how many coffees you’d like to send.</h2>
+            <p class="card-note">Each coffee is $5.</p>
 
-            <div class="quick-amounts" aria-label="Choose a heart amount">
-                <button class="quick-amount" type="button" data-count="1" aria-pressed="true">
-                    <span class="quick-count">❤️ 1</span><span class="quick-price">$5</span>
+            <div class="quick-amounts" aria-label="Choose how many coffees">
+                <button class="quick-amount" type="button" data-amount="1" aria-pressed="true">
+                    <span class="quick-count">☕ 1</span><span class="quick-price">$5</span>
                 </button>
-                <button class="quick-amount" type="button" data-count="3" aria-pressed="false">
-                    <span class="quick-count">❤️ 3</span><span class="quick-price">$15</span>
+                <button class="quick-amount" type="button" data-amount="3" aria-pressed="false">
+                    <span class="quick-count">☕ 3</span><span class="quick-price">$15</span>
                 </button>
-                <button class="quick-amount" type="button" data-count="5" aria-pressed="false">
-                    <span class="quick-count">❤️ 5</span><span class="quick-price">$25</span>
+                <button class="quick-amount" type="button" data-amount="5" aria-pressed="false">
+                    <span class="quick-count">☕ 5</span><span class="quick-price">$25</span>
                 </button>
-                <button class="quick-amount" type="button" data-count="10" aria-pressed="false">
-                    <span class="quick-count">💞 10</span><span class="quick-price">$50</span>
+                <button class="quick-amount" type="button" data-amount="10" aria-pressed="false">
+                    <span class="quick-count">☕ 10</span><span class="quick-price">$50</span>
                 </button>
-            </div>
-
-            <span class="quantity-label" id="quantity-label">Number of hearts</span>
-            <div class="quantity-control">
-                <button class="stepper" id="decrease" type="button" aria-label="Remove one heart">−</button>
-                <output class="quantity-value" id="quantity-value" aria-live="polite" aria-labelledby="quantity-label">1</output>
-                <button class="stepper" id="increase" type="button" aria-label="Add one heart">+</button>
-                <span class="unit-price">❤️ $5 each</span>
+                <button class="quick-amount other-amount" type="button" data-amount="other" aria-pressed="false">
+                    <span class="quick-count">✨ Other amount</span><span class="quick-price">Choose at checkout</span>
+                </button>
             </div>
 
             <div class="total-row">
@@ -365,51 +317,42 @@
                 <output class="total" id="total" aria-live="polite">$5</output>
             </div>
             <div class="divider"></div>
-            <a class="checkout-button" href="https://donate.stripe.com/7sY3cvfKhgdjaM41Iq1ck00" target="_blank" rel="noopener noreferrer">Send Your Love ❤️</a>
-            <p class="checkout-note"><span>⌁</span> Stripe test checkout is currently fixed at $5 per payment; the selection above updates the on-page total only.</p>
+            <a class="checkout-button" id="checkout-link" href="https://donate.stripe.com/5kQeVd2Xv8KR8DWgDk1ck02" target="_blank" rel="noopener noreferrer">Buy Me a Coffee ☕</a>
+            <p class="checkout-note"><span>⌁</span> You’ll be taken to Stripe’s secure checkout to complete your payment.</p>
         </section>
     </main>
 
     <script>
         (() => {
-            const quantityOutput = document.getElementById('quantity-value');
+            const OPTIONS = {
+                1: { total: '$5', url: 'https://donate.stripe.com/5kQeVd2Xv8KR8DWgDk1ck02' },
+                3: { total: '$15', url: 'https://donate.stripe.com/00wfZhgOl5yFbQ83Qy1ck03' },
+                5: { total: '$25', url: 'https://buy.stripe.com/eVq6oH9lT7GN7zS72K1ck04' },
+                10: { total: '$50', url: 'https://buy.stripe.com/aFacN50Pn0elcUccn41ck05' },
+                other: { total: 'Choose your amount at checkout.', url: 'https://buy.stripe.com/4gM14n9lTf9f6vO2Mu1ck06' }
+            };
+
             const totalOutput = document.getElementById('total');
-            const decreaseButton = document.getElementById('decrease');
-            const increaseButton = document.getElementById('increase');
+            const checkoutLink = document.getElementById('checkout-link');
             const quickAmountButtons = document.querySelectorAll('.quick-amount');
-            const maxQuantity = Math.floor(Number.MAX_SAFE_INTEGER / 5);
-            let quantity = 1;
+            let selected = '1';
 
             function updateAmount() {
-                quantityOutput.textContent = quantity.toLocaleString();
-                totalOutput.textContent = `$${(quantity * 5).toLocaleString()}`;
-                decreaseButton.disabled = quantity <= 1;
-                increaseButton.disabled = quantity >= maxQuantity;
+                const option = OPTIONS[selected];
+                totalOutput.textContent = option.total;
+                totalOutput.classList.toggle('is-note', selected === 'other');
+                checkoutLink.href = option.url;
 
                 quickAmountButtons.forEach((button) => {
-                    button.setAttribute('aria-pressed', String(Number(button.dataset.count) === quantity));
+                    button.setAttribute('aria-pressed', String(button.dataset.amount === selected));
                 });
             }
 
             quickAmountButtons.forEach((button) => {
                 button.addEventListener('click', () => {
-                    quantity = Number(button.dataset.count);
+                    selected = button.dataset.amount;
                     updateAmount();
                 });
-            });
-
-            decreaseButton.addEventListener('click', () => {
-                if (quantity > 1) {
-                    quantity -= 1;
-                    updateAmount();
-                }
-            });
-
-            increaseButton.addEventListener('click', () => {
-                if (quantity < maxQuantity) {
-                    quantity += 1;
-                    updateAmount();
-                }
             });
 
             updateAmount();
