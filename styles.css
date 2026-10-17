@@ -8,6 +8,11 @@
 html {
     scroll-behavior: smooth;
     font-size: 16px;
+    /* Clip sideways overflow at the root as well as on body. Without this iOS
+       widens the layout viewport to the overflowing content, which pushes the
+       fixed header (and its menu toggle) off the right of the screen. */
+    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 body {
@@ -16,6 +21,7 @@ body {
     color: #2E4A42;
     background-color: #E8E0D5;
     overflow-x: hidden;
+    overflow-x: clip;
     cursor: none;
 }
 
@@ -3224,6 +3230,9 @@ s
 
     .nav-toggle {
         display: flex;
+        flex: 0 0 auto;
+        justify-content: center;
+        padding: 0.5rem 0;
     }
 
     .nav-toggle.active .toggle-line:nth-child(1) {
@@ -3316,6 +3325,7 @@ s
         padding: 2rem 1rem;
         height: 550px;
         perspective: 900px;
+        overflow: hidden; /* the offset prev/next cards must not widen the page */
     }
     
     .carousel-nav {
@@ -3424,6 +3434,20 @@ s
 
     .nav {
         padding: 1rem;
+        gap: 1rem;
+    }
+
+    .nav-brand {
+        min-width: 0;
+    }
+
+    .brand-logo {
+        height: 52px;
+    }
+
+    .brand-text,
+    .brand-accent {
+        font-size: 1.3rem;
     }
 
     .hero {
