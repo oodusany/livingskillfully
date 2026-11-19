@@ -5134,6 +5134,7 @@ s
 /* Training & Practice — understated credentials block */
 .training-practice {
     padding: 2.5rem 0 3.5rem;
+    scroll-margin-top: 7rem;
 }
 
 .training-inner {
@@ -5152,6 +5153,7 @@ s
 }
 
 .training-list {
+    max-width: 390px;
     list-style: none;
     padding: 0;
     margin: 0;
@@ -5172,8 +5174,30 @@ s
     font-weight: 600;
 }
 
-.training-badge {
-    flex-shrink: 0;
+.training-credential-link {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+
+.training-credential-link:hover {
+    color: #2E4A42;
+}
+
+.training-badges {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.training-badge img {
+    display: block;
+}
+
+@media (max-width: 480px) {
+    .training-badges {
+        flex-direction: column;
+    }
 }
 
 /* Work Together — what we work on */
